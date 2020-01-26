@@ -1,12 +1,16 @@
 import * as THREE from './three.module.js';
-
 import Stats from './stats.module.js';
 import { GUI } from './dat.gui.module.js';
-import { OrbitControls } from './OrbitControls.js';
 import { GLTFLoader } from './GLTFLoader.js'
+import { FlyControls } from './FlyControls.js';
 
 var container, stats;
-var camera, scene, renderer;
+var camera, scene,controls, renderer;
+var MARGIN = 0;
+var SCREEN_HEIGHT = window.innerHeight - MARGIN * 2;
+var SCREEN_WIDTH = window.innerWidth;
+var d = new THREE.Vector3();
+var clock = new THREE.Clock();
 
 init();
 animate();
@@ -22,12 +26,26 @@ function init() {
     scene.fog = new THREE.Fog( 0xcce0ff, 400, 2000 );
 
     // Création de notre caméra
-    camera = new THREE.PerspectiveCamera(30, window.innerWidth / window.innerHeight, 1, 10000);
+    camera = new THREE.PerspectiveCamera( 25, SCREEN_WIDTH / SCREEN_HEIGHT, 50, 1e7 );
     // Définition de la position de la caméra
         camera.position.z = 500;
         camera.position.y = 150;
         camera.position.x = 10;
         camera.rotation.y = 10;
+
+    renderer = new THREE.WebGLRenderer( { antialias: true } );
+    renderer.setPixelRatio( window.devicePixelRatio );
+    renderer.setSize( SCREEN_WIDTH, SCREEN_HEIGHT );
+    document.body.appendChild( renderer.domElement );
+
+    //Controls
+    controls = new FlyControls( camera, renderer.domElement );
+    controls.movementSpeed = 1000;
+    controls.domElement = renderer.domElement;
+    controls.rollSpeed = Math.PI / 24;
+    controls.autoForward = false;
+    controls.dragToLook = false;
+
 
     setLights();
 
@@ -35,11 +53,9 @@ function init() {
 
     rendered();
 
-    setOrbitControls();
-
     setStatsModule();
 
-   loadIle();
+    loadIle();
 
     loadHouse();
 
@@ -49,15 +65,13 @@ function init() {
 
     loadChiken();
 
-    for (var i = 0; i < 10; i++) {
+    for (var i = 0; i < 10; i++)
+    {
         loadcrystal((0+(i-0.5)),25.9,(-10+(i*0.1)));
     }
-     
-
-    
 
     // Evenement resize relié à la fonction onWindowResize
-    window.addEventListener('resize', onWindowResize, false);
+    // window.addEventListener('resize', onWindowResize, false);
 }
 
 /**
@@ -138,15 +152,7 @@ function rendered() {
 /**
  * Fonction de paramètrage de l'Orbit Control
  */
-function setOrbitControls() {
-    // Utilisation de l'Orbit Controls pour une navigation plus fluide
-    var controls = new OrbitControls(camera, renderer.domElement);
-    // Limitation de l'angle de rotation pour bloquer le basculement du monde
-    controls.maxPolarAngle = Math.PI * 0.5;
-    // Définition de la distance minimale et maximale à laquelle on peut aller dans notre monde
-    controls.minDistance = 50;
-    controls.maxDistance = 1000;
-}
+
 
 /**
  * Fonction d'initialisation du module stats
@@ -237,7 +243,6 @@ function loadtree() {
             console.log(error)
         }
     );
-
 }
 
 function loadChiken() {
@@ -272,7 +277,6 @@ function loadChiken() {
             console.log(error)
         }
     );
-
 }
 
 function loadboat() {
@@ -318,7 +322,6 @@ function loadboat() {
             console.log(error)
         }
     );
-
 }
 
 function loadcrystal(Px,Py,Pz) {
@@ -353,7 +356,6 @@ function loadcrystal(Px,Py,Pz) {
             console.log(error)
         }
     );
-
 }
 
 function loadHouse() {
@@ -374,7 +376,7 @@ function loadHouse() {
             gltf.scene.rotation.y =  90 * Math.PI / 180;
             gltf.scene.position.x = 17;
             gltf.scene.position.z = 72;
-            gltf.scene.position.y = 30.3;
+            gltf.scene.position.y = 30.29;
         },
 
         // Fonction appelée lors du chargement
@@ -429,18 +431,16 @@ function loader(objectName,Px,Py,Pz,scale) {
             console.log(error)
         }
     );
-
 }
-
 
 /**
  * Fonction d'évenement, lancée en cas de resize de la fenêtre
  */
-function onWindowResize() {
+/*function onWindowResize() {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
     renderer.setSize( window.innerWidth, window.innerHeight );
-}
+}*/
 
 /**
  * Fonction d'animation du monde
@@ -456,5 +456,8 @@ function animate() {
  * Fonction de rendu
  */
 function render() {
+    var delta = clock.getDelta();
     renderer.render(scene, camera);
+    controls.movementSpeed = 0.33 * d;
+    controls.update( delta );
 }

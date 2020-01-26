@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="25e9a4cb-9250-4bca-b234-c1a34503992f" name="Default Changelist" comment="" />
+    <list default="true" id="25e9a4cb-9250-4bca-b234-c1a34503992f" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/js/FlyControls.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/js/FlyControls.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/js/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/js/main.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -82,7 +86,9 @@
       <workItem from="1578937037296" duration="8931000" />
       <workItem from="1579250335509" duration="5196000" />
       <workItem from="1579266942587" duration="417000" />
-      <workItem from="1579282317760" duration="2452000" />
+      <workItem from="1579282317760" duration="4176000" />
+      <workItem from="1579700741065" duration="37000" />
+      <workItem from="1579968979751" duration="3591000" />
     </task>
     <servers />
   </component>
@@ -90,10 +96,19 @@
     <option name="version" value="1" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="457" y="294" key="com.intellij.ide.util.TipDialog" timestamp="1579282319630">
+    <state width="500" height="445" key="SwitcherDM" timestamp="1580041765294">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
+    <state width="500" height="445" key="SwitcherDM/0.23.1440.877@0.23.1440.877" timestamp="1580041765294" />
+    <state x="457" y="294" key="com.intellij.ide.util.TipDialog" timestamp="1579700741128">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state x="457" y="294" key="com.intellij.ide.util.TipDialog/0.23.1440.877/-245.-1057.1920.1057@0.23.1440.877" timestamp="1579700741128" />
     <state x="457" y="294" key="com.intellij.ide.util.TipDialog/0.23.1440.877@0.23.1440.877" timestamp="1579282319630" />
+    <state x="503" y="385" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1580041766269">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state x="503" y="385" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.23.1440.877@0.23.1440.877" timestamp="1580041766269" />
     <state x="301" y="49" width="837" height="825" key="find.popup" timestamp="1579284470149">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
@@ -102,5 +117,23 @@
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state x="385" y="213" width="670" height="158" key="search.everywhere.popup/0.23.1440.877@0.23.1440.877" timestamp="1579261643446" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/fly.html</url>
+          <line>38</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/fly.html</url>
+          <line>183</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
