@@ -28,19 +28,18 @@ var direction = new THREE.Vector3();
 init();
 animate();
 
+
 function init() {
-
-
 
     // Création d'une div dans le dom, et ajout du container
     container = document.createElement('div');
     document.body.appendChild(container);
 
-    camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 2000 );
+    camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 2500 );
     camera.position.y = 0;
     camera.position.x= 150;
     camera.position.z= 500;
-    camera.rotation.y= 1;
+    camera.rotation.y= 4;
     camera.rotation.x = 0;
     camera.rotation.z = 0;
 
@@ -65,11 +64,6 @@ function init() {
     var material = new THREE.LineBasicMaterial( { color : 0xff0000 } );
     var line = new THREE.Line( geometry, material );
     scene.add ( line );
-
-
-
-
-
 
 
     // Ajout d'une lumière ambiante à notre scène
@@ -187,7 +181,7 @@ function init() {
     document.addEventListener( 'keyup', onKeyUp, false );
 
     raycaster = new THREE.Raycaster( new THREE.Vector3());
-    scene.add(new THREE.ArrowHelper(raycaster.ray.direction, raycaster.ray.origin, 100000, 0xff0000) );
+    //scene.add(new THREE.ArrowHelper(raycaster.ray.direction, raycaster.ray.origin, 100000, 0xff0000) );
 
     // floor //
     //
@@ -230,6 +224,7 @@ function init() {
 
     grounds();
     loadIle();
+    loadHouse();
 
     //
 
@@ -264,9 +259,9 @@ function loadIle() {
             gltf.asset; // Object
 
             gltf.scene.rotation.y = -300;
-             gltf.scene.position.x = -800;
-             gltf.scene.position.z = -90;
-             gltf.scene.position.y = -150;
+             gltf.scene.position.x = -200;
+             gltf.scene.position.z = -10;
+             gltf.scene.position.y = -300;
         },
 
         // Fonction appelée lors du chargement
@@ -299,15 +294,50 @@ function grounds() {
     // Liaison material <=> texture
     var groundMaterial = new THREE.MeshLambertMaterial({map: groundTexture});
     // Création de notre mesh
-    var mesh = new THREE.Mesh(new THREE.PlaneBufferGeometry( 20000, 20000 ), groundMaterial);
+    var mesh = new THREE.Mesh(new THREE.PlaneBufferGeometry( 5000, 5000, 100,100 ), groundMaterial);
     // Définition de la position Y de notre plateau
-    mesh.position.y = -250;
+    mesh.position.y = -600;
     // Ajout d'une rotation en x
     mesh.rotation.x = -Math.PI / 2;
     // Activation des ombres sur le sol
     mesh.receiveShadow = true;
     // Ajout à la scène
     scene.add(mesh);
+}
+
+function loadHouse() {
+    var loader = new GLTFLoader();
+    loader.load(
+        // Chemin de la ressource
+        './src/objects/house/scene.gltf',
+        // called when the resource is loaded
+        function (gltf) {
+            scene.add(gltf.scene);
+
+            gltf.animations; // Array<THREE.AnimationClip>
+            gltf.scene.scale.set(60,60,60); // THREE.Scene
+            gltf.scenes; // Array<THREE.Scene>
+            gltf.cameras; // Array<THREE.Camera>
+            gltf.asset; // Object
+
+            gltf.scene.rotation.y =  90 * Math.PI / 180;
+            gltf.scene.position.x = 20;
+            gltf.scene.position.z = 0;
+            gltf.scene.position.y = 138;
+        },
+
+        // Fonction appelée lors du chargement
+        function (xhr) {
+            console.log((xhr.loaded / xhr.total * 100) + '% loaded house');
+        },
+
+        // Fonction appelée lors d'une quelconque erreur
+        function (error) {
+            console.log('Une erreur est survenue');
+            console.log(error)
+        }
+    );
+
 }
 
 /**
@@ -338,19 +368,17 @@ function animate() {
 
         raycaster.ray.origin.copy( controls.getObject().position );
 
-
-
         var intersections = raycaster.intersectObjects( objects );
 
         var onObject = intersections.length > 0;
 
         var time = performance.now();
-        var delta = ( time - prevTime ) / 1000;
+        var delta = ( time - prevTime ) / 400; //Seed
 
         velocity.x -= velocity.x * 10.0 * delta;
         velocity.z -= velocity.z * 10.0 * delta;
 
-        velocity.y -= 9.8 * 100.0 * delta; // 100.0 = mass
+        velocity.y -= 9.8 * 90.0 * ( ( time - prevTime ) / 500 ); // 100.0 = mass
 
         direction.z = Number( moveForward ) - Number( moveBackward );
         direction.x = Number( moveRight ) - Number( moveLeft );
