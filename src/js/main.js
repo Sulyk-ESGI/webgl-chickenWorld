@@ -1,6 +1,5 @@
 import * as THREE from '../../build/three.module.js';
 import  Stats from './stats.module.js';
-
 import { GLTFLoader } from './GLTFLoader.js'
 
 
@@ -12,6 +11,7 @@ var container;
 var objects = [];
 
 var raycaster;
+var spotLight, lightHelper, shadowCameraHelper, light, shadow;
 
 var moveForward = false;
 var moveBackward = false;
@@ -35,7 +35,10 @@ function init() {
     container = document.createElement('div');
     document.body.appendChild(container);
 
-    camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 2500 );
+    renderer = new THREE.WebGLRenderer();
+    renderer.shadowMap.enabled = true;
+
+    camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 8500 );
     camera.position.y = 0;
     camera.position.x= 150;
     camera.position.z= 500;
@@ -43,51 +46,44 @@ function init() {
     camera.rotation.x = 0;
     camera.rotation.z = 0;
 
-
+    //Creation de la scene
     scene = new THREE.Scene();
     scene.background = new THREE.Color(0xCCE0FF);
-    scene.fog = new THREE.Fog( 0xffffff, 0, 2500 );
+    //Fog
+    scene.fog = new THREE.Fog( 0xffffff, 0, 10500 );
 
-    // Draw a line from pointA in the given direction at distance 100
-    var pointA = new THREE.Vector3( 0, 0, 0 );
-    var direction = new THREE.Vector3( 10000, 0, 0 );
-    direction.normalize();
-
-    var distance = 100; // at what distance to determine pointB
-
-    var pointB = new THREE.Vector3();
-    pointB.addVectors ( pointA, direction.multiplyScalar( distance ) );
-
-    var geometry = new THREE.Geometry();
-    geometry.vertices.push( pointA );
-    geometry.vertices.push( pointB );
-    var material = new THREE.LineBasicMaterial( { color : 0xff0000 } );
-    var line = new THREE.Line( geometry, material );
-    scene.add ( line );
-
-
-    // Ajout d'une lumière ambiante à notre scène
-    scene.add(new THREE.AmbientLight(0x666666));
-    // Ajout d'une lumière directionnelle d'intensité 1
-    var light = new THREE.DirectionalLight(0xdfebff, 1);
 
     /**
      * Position de là où pointe la lumière (x, y, z)
      * Activation des ombres pour la lumière
      * Propriétés des ombres (width / height)
      */
-    light.position.set(50, 200, 100);
-    light.castShadow = true;
-    light.shadow.mapSize.width = 1024;
-    light.shadow.mapSize.height = 1024;
 
-    var d = 300;
-    light.shadow.camera.left = -d;
-    light.shadow.camera.right = d;
-    light.shadow.camera.top = d;
-    light.shadow.camera.bottom = -d;
-    light.shadow.camera.far = 1000;
-    scene.add(light);
+    //Light test + helper
+
+    var ambient = new THREE.AmbientLight( 0xffffff, 0.1 );
+    scene.add( ambient );
+
+    spotLight = new THREE.SpotLight( 0xffffff, 1 );
+    spotLight.position.set( -20, 5, 10 );
+    spotLight.angle = Math.PI / 4;
+    spotLight.penumbra = 0.05;
+    spotLight.decay = 1.7;
+    spotLight.distance = 2000;
+
+    spotLight.castShadow = true;
+    spotLight.shadow.mapSize.width = 1024;
+    spotLight.shadow.mapSize.height = 1024;
+    spotLight.shadow.camera.near = 10;
+    spotLight.shadow.camera.far = 200;
+
+    scene.add( spotLight );
+
+    lightHelper = new THREE.SpotLightHelper( spotLight );
+    scene.add( lightHelper );
+
+    //
+
 
     controls = new PointerLockControls( camera, document.body );
 
@@ -183,34 +179,6 @@ function init() {
     raycaster = new THREE.Raycaster( new THREE.Vector3());
     //scene.add(new THREE.ArrowHelper(raycaster.ray.direction, raycaster.ray.origin, 100000, 0xff0000) );
 
-    // floor //
-    //
-
-
-    // floorGeometry.rotateX( - Math.PI / 2 );
-    //
-    // // vertex displacement
-    //
-    // var position = floorGeometry.attributes.position;
-    //
-    // position = floorGeometry.attributes.position;
-    // var colors = [];
-    //
-    // for ( var i = 0, l = position.count; i < l; i ++ ) {
-    //
-    //     color.setHSL( Math.random() * 0.5 + 0.3, 0.2, Math.random() * 0.25 + 0.75 );
-    //     colors.push( color.r, color.g, color.b );
-    //
-    // }
-    //
-    // floorGeometry.setAttribute( 'color', new THREE.Float32BufferAttribute( colors, 3 ) );
-    //
-    // var floorMaterial = new THREE.MeshBasicMaterial( { vertexColors: THREE.VertexColors } );
-    //
-    //var floor = new THREE.Mesh( floorGeometry );
-    //scene.add( floor );
-
-    //
 
     renderer = new THREE.WebGLRenderer( { antialias: true } );
     renderer.setPixelRatio( window.devicePixelRatio );
@@ -221,14 +189,24 @@ function init() {
     //
 
     setStatsModule();
-
+    render();
     grounds();
     loadIle();
     loadHouse();
+    loadtree();
+    loadboat();
 
     //
 
     window.addEventListener( 'resize', onWindowResize, false );
+
+}
+
+function render() {
+
+    lightHelper.update();
+
+    renderer.render( scene, camera );
 
 }
 
@@ -253,7 +231,7 @@ function loadIle() {
 
             gltf.animations; // Array<THREE.AnimationClip>
             gltf.scene; // THREE.Scene
-            gltf.scene.scale.set(10,10,10); // THREE.Scene
+            gltf.scene.scale.set(20,20,20); // THREE.Scene
             gltf.scenes; // Array<THREE.Scene>
             gltf.cameras; // Array<THREE.Camera>
             gltf.asset; // Object
@@ -261,7 +239,7 @@ function loadIle() {
             gltf.scene.rotation.y = -300;
              gltf.scene.position.x = -200;
              gltf.scene.position.z = -10;
-             gltf.scene.position.y = -300;
+             gltf.scene.position.y = -600;
         },
 
         // Fonction appelée lors du chargement
@@ -294,9 +272,9 @@ function grounds() {
     // Liaison material <=> texture
     var groundMaterial = new THREE.MeshLambertMaterial({map: groundTexture});
     // Création de notre mesh
-    var mesh = new THREE.Mesh(new THREE.PlaneBufferGeometry( 5000, 5000, 100,100 ), groundMaterial);
+    var mesh = new THREE.Mesh(new THREE.PlaneBufferGeometry( 20000, 20000, 200,200 ), groundMaterial);
     // Définition de la position Y de notre plateau
-    mesh.position.y = -600;
+    mesh.position.y = -3200;
     // Ajout d'une rotation en x
     mesh.rotation.x = -Math.PI / 2;
     // Activation des ombres sur le sol
@@ -315,20 +293,103 @@ function loadHouse() {
             scene.add(gltf.scene);
 
             gltf.animations; // Array<THREE.AnimationClip>
-            gltf.scene.scale.set(60,60,60); // THREE.Scene
             gltf.scenes; // Array<THREE.Scene>
+            gltf.scene.scale.set(80,80,80); // THREE.Scene
             gltf.cameras; // Array<THREE.Camera>
             gltf.asset; // Object
 
-            gltf.scene.rotation.y =  90 * Math.PI / 180;
-            gltf.scene.position.x = 20;
-            gltf.scene.position.z = 0;
-            gltf.scene.position.y = 138;
+            gltf.scene.rotation.y =  90 * Math.PI / 1;
+            gltf.scene.position.x = -100;
+            gltf.scene.position.z = -250;
+            gltf.scene.position.y = 152.5;
         },
 
         // Fonction appelée lors du chargement
         function (xhr) {
             console.log((xhr.loaded / xhr.total * 100) + '% loaded house');
+        },
+
+        // Fonction appelée lors d'une quelconque erreur
+        function (error) {
+            console.log('Une erreur est survenue');
+            console.log(error)
+        }
+    );
+
+}
+
+function loadtree() {
+    var loader = new GLTFLoader();
+    loader.load(
+        // Chemin de la ressource
+        './src/objects/tree/scene.gltf',
+        // called when the resource is loaded
+        function (gltf) {
+            scene.add(gltf.scene);
+
+            gltf.animations; // Array<THREE.AnimationClip>
+            gltf.scene; // THREE.Scene
+
+            gltf.scenes; // Array<THREE.Scene>
+
+            gltf.cameras; // Array<THREE.Camera>
+            gltf.asset; // Object
+            gltf.scene.scale.set(10,10,10); // THREE.Scene
+            gltf.scene.rotation.y = 0;
+            gltf.scene.position.x = 12500;
+            gltf.scene.position.z = -2200;
+            gltf.scene.position.y = -3500;
+        },
+
+        // Fonction appelée lors du chargement
+        function (xhr) {
+            console.log((xhr.loaded / xhr.total * 100) + '% loaded tree');
+        },
+
+        // Fonction appelée lors d'une quelconque erreur
+        function (error) {
+            console.log('Une erreur est survenue');
+            console.log(error)
+        }
+    );
+
+}
+
+function loadboat() {
+    var loader = new GLTFLoader();
+    loader.load(
+        // Chemin de la ressource
+        './src/objects/boat/scene.gltf',
+        // called when the resource is loaded
+        function (gltf) {
+            gltf.scene.traverse( function ( child ) {
+
+                if ( child.isMesh ) {
+
+                    child.castShadow = true;
+                    child.receiveShadow = true;
+
+                }
+
+            } );
+            scene.add(gltf.scene);
+
+            gltf.animations; // Array<THREE.AnimationClip>
+            gltf.scene.scale.set(6,6,6); // THREE.Scene
+            gltf.scenes; // Array<THREE.Scene>
+            gltf.cameras; // Array<THREE.Camera>
+            gltf.asset; // Object
+
+
+            gltf.scene.rotation.y = 2;
+            gltf.scene.position.x = 2000;
+            gltf.scene.position.z = 200;
+            gltf.scene.position.y = -400;
+        },
+
+        // Fonction appelée lors du chargement
+        function (xhr) {
+            console.log((xhr.loaded / xhr.total * 100) + '% loaded boat');
         },
 
         // Fonction appelée lors d'une quelconque erreur
@@ -358,11 +419,20 @@ function onWindowResize() {
 
 }
 
+/////////////////////////////////////////
+// 		Paramètres des contrôles   	   //
+/////////////////////////////////////////
+const gui = new dat.GUI();
+var params = {
+    movSpeed: 50,
+};
 
+gui.add(params, 'movSpeed').name('Speed').min(0).max(60).step(1);
 
 function animate() {
 
     requestAnimationFrame( animate );
+
 
     if ( controls.isLocked === true ) {
 
@@ -373,10 +443,10 @@ function animate() {
         var onObject = intersections.length > 0;
 
         var time = performance.now();
-        var delta = ( time - prevTime ) / 400; //Seed
+        var delta = ( time - prevTime + params.movSpeed) / 400 ; //Seed
 
-        velocity.x -= velocity.x * 10.0 * delta;
-        velocity.z -= velocity.z * 10.0 * delta;
+        velocity.x -= velocity.x * 10.0 * delta ;
+        velocity.z -= velocity.z * 10.0 * delta ;
 
         velocity.y -= 9.8 * 90.0 * ( ( time - prevTime ) / 500 ); // 100.0 = mass
 
@@ -384,7 +454,7 @@ function animate() {
         direction.x = Number( moveRight ) - Number( moveLeft );
         direction.normalize(); // this ensures consistent movements in all directions
 
-        if ( moveForward || moveBackward ) velocity.z -= direction.z * 400.0 * delta;
+        if ( moveForward || moveBackward ) velocity.z  -= direction.z * 400.0 * delta;
         if ( moveLeft || moveRight ) velocity.x -= direction.x * 400.0 * delta;
 
         if ( onObject === true ) {
@@ -411,6 +481,8 @@ function animate() {
         prevTime = time;
 
     }
+
+
     stats.update();
     renderer.render( scene, camera );
 
