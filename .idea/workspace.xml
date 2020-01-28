@@ -43,7 +43,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../game_of_life" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -90,6 +90,7 @@
       <workItem from="1579700741065" duration="37000" />
       <workItem from="1579968979751" duration="5831000" />
       <workItem from="1580152847428" duration="9585000" />
+      <workItem from="1580200481019" duration="7431000" />
     </task>
     <servers />
   </component>
@@ -130,55 +131,33 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/fly.html</url>
-          <line>38</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/fly.html</url>
-          <line>183</line>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/js/main.js</url>
-          <line>212</line>
-          <properties lambdaOrdinal="-1" />
+          <line>232</line>
           <option name="timeStamp" value="3" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/js/main.js</url>
-          <line>147</line>
-          <properties lambdaOrdinal="-1" />
+          <line>167</line>
           <option name="timeStamp" value="5" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/js/main.js</url>
-          <line>285</line>
-          <properties lambdaOrdinal="-1" />
+          <line>306</line>
           <option name="timeStamp" value="6" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/js/main.js</url>
-          <line>258</line>
-          <properties lambdaOrdinal="-1" />
-          <option name="timeStamp" value="7" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/src/js/main.js</url>
-          <line>114</line>
-          <properties lambdaOrdinal="-1" />
+          <line>134</line>
           <option name="timeStamp" value="8" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/js/main.js</url>
-          <line>431</line>
-          <properties lambdaOrdinal="-1" />
+          <line>442</line>
           <option name="timeStamp" value="9" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/js/main.js</url>
-          <line>406</line>
-          <properties lambdaOrdinal="-1" />
+          <line>427</line>
           <option name="timeStamp" value="10" />
         </line-breakpoint>
       </breakpoints>

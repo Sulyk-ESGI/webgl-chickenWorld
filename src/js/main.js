@@ -25,9 +25,23 @@ var direction = new THREE.Vector3();
 //var vertex = new THREE.Vector3();
 //var color = new THREE.Color();
 
+
+
+/////////////////////////////////////////
+// 		Paramètres des contrôles   	   //
+/////////////////////////////////////////
+const gui = new dat.GUI();
+var params = {
+    movSpeed: 50,
+
+};
+
+gui.add(params, 'movSpeed').name('Speed').min(0).max(60).step(1);
+
+
+
 init();
 animate();
-
 
 function init() {
 
@@ -61,15 +75,18 @@ function init() {
 
     //Light test + helper
 
-    var ambient = new THREE.AmbientLight( 0xffffff, 0.1 );
+    var ambient = new THREE.AmbientLight( 0xFFEFB1, 0.1 );
     scene.add( ambient );
 
-    spotLight = new THREE.SpotLight( 0xffffff, 1 );
-    spotLight.position.set( -20, 5, 10 );
-    spotLight.angle = Math.PI / 4;
+
+    spotLight = new THREE.SpotLight( 0xffffff, 1.3 );
+    spotLight.position.set( -10, 10, 2 );
+    spotLight.angle = Math.PI / 3;
     spotLight.penumbra = 0.05;
-    spotLight.decay = 1.7;
+    spotLight.decay = 1.8;
     spotLight.distance = 2000;
+
+
 
     spotLight.castShadow = true;
     spotLight.shadow.mapSize.width = 1024;
@@ -81,6 +98,9 @@ function init() {
 
     lightHelper = new THREE.SpotLightHelper( spotLight );
     scene.add( lightHelper );
+
+
+
 
     //
 
@@ -257,6 +277,7 @@ function loadIle() {
 }
 
 function grounds() {
+
     // Pré-chargement d'une texture
     var loader = new THREE.TextureLoader();
     // Chargement de la texture du sol
@@ -272,9 +293,9 @@ function grounds() {
     // Liaison material <=> texture
     var groundMaterial = new THREE.MeshLambertMaterial({map: groundTexture});
     // Création de notre mesh
-    var mesh = new THREE.Mesh(new THREE.PlaneBufferGeometry( 20000, 20000, 200,200 ), groundMaterial);
+    var mesh = new THREE.Mesh(new THREE.PlaneBufferGeometry( 20000, 20000 ), groundMaterial);
     // Définition de la position Y de notre plateau
-    mesh.position.y = -3200;
+    mesh.position.y = -250;
     // Ajout d'une rotation en x
     mesh.rotation.x = -Math.PI / 2;
     // Activation des ombres sur le sol
@@ -418,16 +439,6 @@ function onWindowResize() {
     renderer.setSize( window.innerWidth, window.innerHeight );
 
 }
-
-/////////////////////////////////////////
-// 		Paramètres des contrôles   	   //
-/////////////////////////////////////////
-const gui = new dat.GUI();
-var params = {
-    movSpeed: 50,
-};
-
-gui.add(params, 'movSpeed').name('Speed').min(0).max(60).step(1);
 
 function animate() {
 
