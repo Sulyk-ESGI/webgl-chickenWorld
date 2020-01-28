@@ -104,7 +104,7 @@ function init() {
 
     //Light test + helper
 
-    var ambient = new THREE.AmbientLight( 0xFFEFB1, 0.2 );
+    var ambient = new THREE.AmbientLight( 0xFFEFB1, 0.5 );
     scene.add( ambient );
 
     //House light
@@ -126,11 +126,20 @@ function init() {
     //Second light of boat
     var spotLight3 = new THREE.SpotLight( 0xff9900, 1.6 );
     spotLight3.position.set( 1850, 150, -500 );
-    spotLight3.angle = Math.PI
+    spotLight3.angle = Math.PI;
     spotLight3.penumbra = 0.05;
     spotLight3.decay = 1.8;
     spotLight3.distance = 1500;
 
+    //LightHosue Light
+    var spotLight4 = new THREE.SpotLight( 0xffffb3, 5 );
+    spotLight4.position.set( 6050, 3600, -2800 );
+    spotLight4.angle = Math.PI;
+    spotLight4.penumbra = 0.05;
+    spotLight4.decay = 1.0;
+    spotLight4.distance = 8500;
+
+    //
 
     spotLight.castShadow = true;
     spotLight.shadow.mapSize.width = 1024;
@@ -141,11 +150,12 @@ function init() {
     scene.add( spotLight );
     scene.add( spotLight2 );
     scene.add( spotLight3 );
+    scene.add( spotLight4 );
 
     lightHelper = new THREE.SpotLightHelper( spotLight );
     //scene.add( lightHelper );
 
-    lightHelper2 = new THREE.SpotLightHelper( spotLight3 );
+    lightHelper2 = new THREE.SpotLightHelper( spotLight4 );
     scene.add( lightHelper2 );
 
 
@@ -262,6 +272,7 @@ function init() {
     loadHouse();
     loadtree();
     loadboat();
+    loadLightHouse();
 
     //
 
@@ -471,6 +482,50 @@ function loadboat() {
 
 }
 
+function loadLightHouse() {
+    var loader = new GLTFLoader();
+    loader.load(
+        // Chemin de la ressource
+        './src/objects/village_lighthouse_team_creepy/scene.gltf',
+        // called when the resource is loaded
+        function (gltf) {
+            gltf.scene.traverse( function ( child ) {
+
+                if ( child.isMesh ) {
+
+                    child.castShadow = true;
+                    child.receiveShadow = true;
+                }
+
+            } );
+            scene.add(gltf.scene);
+
+            gltf.animations; // Array<THREE.AnimationClip>
+            gltf.scene.scale.set(2,2,2); // THREE.Scene
+            gltf.scenes; // Array<THREE.Scene>
+            gltf.cameras; // Array<THREE.Camera>
+            gltf.asset; // Object
+
+
+            gltf.scene.rotation.y = 0;
+            gltf.scene.position.x = -4800;
+            gltf.scene.position.z = -2300;
+            gltf.scene.position.y = -700;
+        },
+
+        // Fonction appelée lors du chargement
+        function (xhr) {
+            console.log((xhr.loaded / xhr.total * 100) + '% loaded lightHouse');
+        },
+
+        // Fonction appelée lors d'une quelconque erreur
+        function (error) {
+            console.log('Une erreur est survenue');
+            console.log(error)
+        }
+    );
+
+}
 /**
  * Fonction d'initialisation du module stats
  */
