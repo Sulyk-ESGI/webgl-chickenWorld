@@ -11,7 +11,7 @@ var container;
 var objects = [];
 
 var raycaster;
-var spotLight, lightHelper, shadowCameraHelper, light, shadow;
+var spotLight, lightHelper,lightHelper2, shadowCameraHelper, light, shadow;
 
 var moveForward = false;
 var moveBackward = false;
@@ -52,7 +52,7 @@ function init() {
     renderer = new THREE.WebGLRenderer();
     renderer.shadowMap.enabled = true;
 
-    camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 8500 );
+    camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 20500 );
     camera.position.y = 0;
     camera.position.x= 150;
     camera.position.z= 500;
@@ -61,11 +61,40 @@ function init() {
     camera.rotation.z = 0;
 
     //Creation de la scene
-    scene = new THREE.Scene();
-    scene.background = new THREE.Color(0xCCE0FF);
-    //Fog
-    scene.fog = new THREE.Fog( 0xffffff, 0, 10500 );
+    // Pré-chargement d'une texture
 
+    scene = new THREE.Scene();
+
+
+    //Fog
+    scene.fog = new THREE.Fog( 0x00001a, 0, 16500 );
+
+    /*
+     * CREATION DE LA SKYBOX
+     */
+
+    let materialArray = [];
+    let texture_ft = new THREE.TextureLoader().load( './src/textures/ame_nebula/purplenebula_ft.jpg');
+    let texture_bk = new THREE.TextureLoader().load( './src/textures/ame_nebula/purplenebula_bk.jpg');
+    let texture_up = new THREE.TextureLoader().load( './src/textures/ame_nebula/purplenebula_up.jpg');
+    let texture_dn = new THREE.TextureLoader().load( './src/textures/ame_nebula/purplenebula_dn.jpg');
+    let texture_rt = new THREE.TextureLoader().load( './src/textures/ame_nebula/purplenebula_rt.jpg');
+    let texture_lf = new THREE.TextureLoader().load( './src/textures/ame_nebula/purplenebula_lf.jpg');
+
+    materialArray.push(new THREE.MeshBasicMaterial( { map: texture_ft }));
+    materialArray.push(new THREE.MeshBasicMaterial( { map: texture_bk }));
+    materialArray.push(new THREE.MeshBasicMaterial( { map: texture_up }));
+    materialArray.push(new THREE.MeshBasicMaterial( { map: texture_dn }));
+    materialArray.push(new THREE.MeshBasicMaterial( { map: texture_rt }));
+    materialArray.push(new THREE.MeshBasicMaterial( { map: texture_lf }));
+
+    for (let i = 0; i < 6; i++)
+        materialArray[i].side = THREE.BackSide;
+
+    let skyboxGeo = new THREE.BoxGeometry( 20000, 20000, 20000);
+    let skybox = new THREE.Mesh( skyboxGeo, materialArray );
+
+    scene.add( skybox );
 
     /**
      * Position de là où pointe la lumière (x, y, z)
@@ -75,17 +104,32 @@ function init() {
 
     //Light test + helper
 
-    var ambient = new THREE.AmbientLight( 0xFFEFB1, 0.1 );
+    var ambient = new THREE.AmbientLight( 0xFFEFB1, 0.2 );
     scene.add( ambient );
 
-
-    spotLight = new THREE.SpotLight( 0xffffff, 1.3 );
+    //House light
+    spotLight = new THREE.SpotLight( 0xffffff, 1.9 );
     spotLight.position.set( -10, 10, 2 );
-    spotLight.angle = Math.PI / 3;
+    spotLight.angle = Math.PI ;
     spotLight.penumbra = 0.05;
     spotLight.decay = 1.8;
     spotLight.distance = 2000;
 
+    //First light of boat
+    var spotLight2 = new THREE.SpotLight( 0xff9900, 1.6 );
+    spotLight2.position.set( 1550, 140, -350 );
+    spotLight2.angle = Math.PI
+    spotLight2.penumbra = 0.05;
+    spotLight2.decay = 1.8;
+    spotLight2.distance = 1500;
+
+    //Second light of boat
+    var spotLight3 = new THREE.SpotLight( 0xff9900, 1.6 );
+    spotLight3.position.set( 1850, 150, -500 );
+    spotLight3.angle = Math.PI
+    spotLight3.penumbra = 0.05;
+    spotLight3.decay = 1.8;
+    spotLight3.distance = 1500;
 
 
     spotLight.castShadow = true;
@@ -95,11 +139,14 @@ function init() {
     spotLight.shadow.camera.far = 200;
 
     scene.add( spotLight );
+    scene.add( spotLight2 );
+    scene.add( spotLight3 );
 
     lightHelper = new THREE.SpotLightHelper( spotLight );
-    scene.add( lightHelper );
+    //scene.add( lightHelper );
 
-
+    lightHelper2 = new THREE.SpotLightHelper( spotLight3 );
+    scene.add( lightHelper2 );
 
 
     //
@@ -225,6 +272,7 @@ function init() {
 function render() {
 
     lightHelper.update();
+    lightHelper2.update();
 
     renderer.render( scene, camera );
 
@@ -281,19 +329,20 @@ function grounds() {
     // Pré-chargement d'une texture
     var loader = new THREE.TextureLoader();
     // Chargement de la texture du sol
-    var groundTexture = loader.load('src/textures/water.png');
+    var groundTexture = loader.load('src/textures/waterTest.jpg');
     // Activation du mode wrap pour la répétition de la texture
     groundTexture.wrapS = groundTexture.wrapT = THREE.RepeatWrapping;
+    groundTexture.color = 0x1F4F4F;
     // Paramtère de répétition de la texture
     groundTexture.repeat.set(10,10);
     // Gestion du flou
-    groundTexture.anisotropy = 16;
+    groundTexture.anisotropy = 30;
     // Encodage avec sRGBEncoding pour une image plus nette
     groundTexture.encoding = THREE.sRGBEncoding;
     // Liaison material <=> texture
     var groundMaterial = new THREE.MeshLambertMaterial({map: groundTexture});
     // Création de notre mesh
-    var mesh = new THREE.Mesh(new THREE.PlaneBufferGeometry( 20000, 20000 ), groundMaterial);
+    var mesh = new THREE.Mesh(new THREE.PlaneBufferGeometry( 20000, 20000), groundMaterial);
     // Définition de la position Y de notre plateau
     mesh.position.y = -250;
     // Ajout d'une rotation en x

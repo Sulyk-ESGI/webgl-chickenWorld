@@ -90,7 +90,7 @@
       <workItem from="1579700741065" duration="37000" />
       <workItem from="1579968979751" duration="5831000" />
       <workItem from="1580152847428" duration="9585000" />
-      <workItem from="1580200481019" duration="7431000" />
+      <workItem from="1580200481019" duration="11513000" />
     </task>
     <servers />
   </component>
@@ -121,43 +121,43 @@
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state x="301" y="49" width="837" height="825" key="find.popup/0.23.1440.877@0.23.1440.877" timestamp="1579284470149" />
-    <state x="684" y="225" width="1192" height="188" key="search.everywhere.popup" timestamp="1580152877784">
-      <screen x="0" y="0" width="2560" height="1040" />
+    <state x="385" y="213" width="670" height="158" key="search.everywhere.popup" timestamp="1580232406582">
+      <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state x="684" y="225" width="1192" height="188" key="search.everywhere.popup/0.0.2560.1040/2560.0.1920.1040@0.0.2560.1040" timestamp="1580152877784" />
-    <state x="385" y="213" width="670" height="158" key="search.everywhere.popup/0.23.1440.877@0.23.1440.877" timestamp="1579261643446" />
+    <state x="385" y="213" width="670" height="158" key="search.everywhere.popup/0.23.1440.877@0.23.1440.877" timestamp="1580232406582" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/js/main.js</url>
-          <line>232</line>
+          <line>280</line>
           <option name="timeStamp" value="3" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/js/main.js</url>
-          <line>167</line>
+          <line>214</line>
           <option name="timeStamp" value="5" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/js/main.js</url>
-          <line>306</line>
+          <line>355</line>
           <option name="timeStamp" value="6" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/js/main.js</url>
-          <line>134</line>
+          <line>181</line>
           <option name="timeStamp" value="8" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/js/main.js</url>
-          <line>442</line>
+          <line>491</line>
           <option name="timeStamp" value="9" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/js/main.js</url>
-          <line>427</line>
+          <line>476</line>
           <option name="timeStamp" value="10" />
         </line-breakpoint>
       </breakpoints>
