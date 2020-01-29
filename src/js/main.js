@@ -156,7 +156,19 @@ function init() {
     spotLight6.decay = 0.2;
     spotLight6.distance = 13500;
 
-    //
+    //Spotlight shadow
+
+    spotLight3.castShadow = true;
+    spotLight3.shadow.mapSize.width = 512;
+    spotLight3.shadow.mapSize.height = 512;
+    spotLight3.shadow.camera.near = 10;
+    spotLight3.shadow.camera.far = 500;
+
+    spotLight4.castShadow = true;
+    spotLight4.shadow.mapSize.width = 512;
+    spotLight4.shadow.mapSize.height = 512;
+    spotLight4.shadow.camera.near = 10;
+    spotLight4.shadow.camera.far = 500;
 
     spotLight6.castShadow = true;
     spotLight6.shadow.mapSize.width = 512;
@@ -298,7 +310,7 @@ function init() {
     loadChickenCoop(800,-65,1200,3);
     loadChickenCoop(800,-65,1000,4);
     loadChickenCoop(600,-65,800,2.3);
-
+    loadChicken(600,-58,800,0);
     //
 
     window.addEventListener( 'resize', onWindowResize, false );
@@ -349,6 +361,52 @@ function loadIle() {
         // Fonction appelée lors du chargement
         function (xhr) {
             console.log((xhr.loaded / xhr.total * 100) + '% loaded ile');
+        },
+
+        // Fonction appelée lors d'une quelconque erreur
+        function (error) {
+            console.log('Une erreur est survenue');
+            console.log(error)
+        }
+    );
+
+}
+
+function loadChicken(Px,Py,Pz,Rt) {
+    var loader = new GLTFLoader();
+    loader.load(
+        // Chemin de la ressource
+        './src/objects/chicken/scene.gltf',
+        // called when the resource is loaded
+        function (gltf) {
+            gltf.scene.traverse( function ( child ) {
+
+                if ( child.isMesh ) {
+
+                    child.castShadow = true;
+                    child.receiveShadow = true;
+
+                }
+
+            } );
+            scene.add(gltf.scene);
+
+            gltf.animations; // Array<THREE.AnimationClip>
+            gltf.scene; // THREE.Scene
+            gltf.scene.scale.set(80,80,80); // THREE.Scene
+            gltf.scenes; // Array<THREE.Scene>
+            gltf.cameras; // Array<THREE.Camera>
+            gltf.asset; // Object
+
+            gltf.scene.rotation.y = Rt;
+            gltf.scene.position.x = Px;
+            gltf.scene.position.z = Pz;
+            gltf.scene.position.y = Py;
+        },
+
+        // Fonction appelée lors du chargement
+        function (xhr) {
+            console.log((xhr.loaded / xhr.total * 100) + '% loaded Chicken');
         },
 
         // Fonction appelée lors d'une quelconque erreur

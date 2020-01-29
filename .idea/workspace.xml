@@ -95,7 +95,7 @@
       <workItem from="1580290394670" duration="16000" />
       <workItem from="1580301305680" duration="5756000" />
       <workItem from="1580317677615" duration="4584000" />
-      <workItem from="1580331131962" duration="1277000" />
+      <workItem from="1580331131962" duration="1836000" />
     </task>
     <servers />
   </component>
@@ -142,45 +142,45 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/js/main.js</url>
-          <line>212</line>
+          <line>224</line>
           <option name="timeStamp" value="8" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/js/main.js</url>
-          <line>637</line>
+          <line>695</line>
           <option name="timeStamp" value="9" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/js/main.js</url>
-          <line>622</line>
+          <line>680</line>
           <option name="timeStamp" value="10" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/js/main.js</url>
-          <line>460</line>
+          <line>518</line>
           <option name="timeStamp" value="13" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/js/main.js</url>
-          <line>408</line>
+          <line>466</line>
           <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="14" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/js/main.js</url>
-          <line>307</line>
+          <line>319</line>
           <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="15" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/js/main.js</url>
-          <line>482</line>
+          <line>540</line>
           <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="17" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/js/main.js</url>
-          <line>529</line>
+          <line>587</line>
           <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="18" />
         </line-breakpoint>
