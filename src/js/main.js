@@ -105,7 +105,7 @@ function init() {
 
     //Light test + helper
 
-    var ambient = new THREE.AmbientLight( 0xFFEFB1, 2.5 );
+    var ambient = new THREE.AmbientLight( 0xFFEFB1, 0.3 );
     scene.add( ambient );
 
     //House light
@@ -158,12 +158,11 @@ function init() {
 
     //
 
-    spotLight.castShadow = true;
-    spotLight.shadow.mapSize.width = 1024;
-    spotLight.shadow.mapSize.height = 1024;
-    spotLight.shadow.camera.near = 10;
-    spotLight.shadow.camera.far = 200;
-
+    spotLight6.castShadow = true;
+    spotLight6.shadow.mapSize.width = 512;
+    spotLight6.shadow.mapSize.height = 512;
+    spotLight6.shadow.camera.near = 10;
+    spotLight6.shadow.camera.far = 500;
 
 
     scene.add( spotLight );
@@ -175,8 +174,6 @@ function init() {
     scene.add( spotLight6 );
 
 
-
-
     // Light Array helper
     lightHelper = new THREE.SpotLightHelper( spotLight6 );
     scene.add( lightHelper );
@@ -184,10 +181,7 @@ function init() {
     lightHelper2 = new THREE.SpotLightHelper( spotLight2 );
     scene.add( lightHelper2 );
 
-
-
     //
-
 
     controls = new PointerLockControls( camera, document.body );
 
@@ -287,8 +281,9 @@ function init() {
     renderer = new THREE.WebGLRenderer( { antialias: true } );
     renderer.setPixelRatio( window.devicePixelRatio );
     renderer.setSize( window.innerWidth, window.innerHeight );
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap; // default THREE.PCFShadowMap
     document.body.appendChild( renderer.domElement );
-
 
     //
 
@@ -300,7 +295,9 @@ function init() {
     loadtree();
     loadboat();
     loadLightHouse();
-    loadChickenCoop();
+    loadChickenCoop(800,-65,1200,3);
+    loadChickenCoop(800,-65,1000,4);
+    loadChickenCoop(600,-65,800,2.3);
 
     //
 
@@ -309,7 +306,6 @@ function init() {
 }
 
 function render() {
-
 
     lightHelper.update();
     lightHelper2.update();
@@ -329,7 +325,7 @@ function loadIle() {
 
                 if ( child.isMesh ) {
 
-                    child.castShadow = true;
+                    child.castShadow = false;
                     child.receiveShadow = true;
 
                 }
@@ -364,7 +360,7 @@ function loadIle() {
 
 }
 
-function loadChickenCoop() {
+function loadChickenCoop(Px,Py,Pz,Rt) {
     var loader = new GLTFLoader();
     loader.load(
         // Chemin de la ressource
@@ -390,10 +386,10 @@ function loadChickenCoop() {
             gltf.cameras; // Array<THREE.Camera>
             gltf.asset; // Object
 
-            gltf.scene.rotation.y = 3;
-            gltf.scene.position.x = 800;
-            gltf.scene.position.z = 1200;
-            gltf.scene.position.y = -65;
+            gltf.scene.rotation.y = Rt;//3
+            gltf.scene.position.x = Px;//800
+            gltf.scene.position.z = Pz;//1200
+            gltf.scene.position.y = Py;//-65
         },
 
         // Fonction appelée lors du chargement
@@ -446,6 +442,16 @@ function loadHouse() {
         './src/objects/house/scene.gltf',
         // called when the resource is loaded
         function (gltf) {
+            gltf.scene.traverse( function ( child ) {
+
+                if ( child.isMesh ) {
+
+                    child.castShadow = true;
+                    child.receiveShadow = true;
+
+                }
+
+            } );
             scene.add(gltf.scene);
 
             gltf.animations; // Array<THREE.AnimationClip>
@@ -481,6 +487,16 @@ function loadtree() {
         './src/objects/tree/scene.gltf',
         // called when the resource is loaded
         function (gltf) {
+            gltf.scene.traverse( function ( child ) {
+
+                if ( child.isMesh ) {
+
+                    child.castShadow = false;
+                    child.receiveShadow = true;
+
+                }
+
+            } );
             scene.add(gltf.scene);
 
             gltf.animations; // Array<THREE.AnimationClip>
