@@ -52,7 +52,7 @@ function init() {
     renderer = new THREE.WebGLRenderer();
     renderer.shadowMap.enabled = true;
 
-    camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 20500 );
+    camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 1, 30500 );
     camera.position.y = 0;
     camera.position.x= 150;
     camera.position.z= 500;
@@ -67,7 +67,7 @@ function init() {
 
 
     //Fog
-    scene.fog = new THREE.Fog( 0x00001a, 0, 16500 );
+    scene.fog = new THREE.Fog( 0x00001a, 0, 24500 );
 
     /*
      * CREATION DE LA SKYBOX
@@ -91,7 +91,7 @@ function init() {
     for (let i = 0; i < 6; i++)
         materialArray[i].side = THREE.BackSide;
 
-    let skyboxGeo = new THREE.BoxGeometry( 20000, 20000, 20000);
+    let skyboxGeo = new THREE.BoxGeometry( 30000, 30000, 30000);
     let skybox = new THREE.Mesh( skyboxGeo, materialArray );
 
     scene.add( skybox );
@@ -131,13 +131,21 @@ function init() {
     spotLight3.decay = 1.8;
     spotLight3.distance = 1500;
 
-    //LightHosue Light
-    var spotLight4 = new THREE.SpotLight( 0xffffb3, 5 );
-    spotLight4.position.set( 6050, 3600, -2800 );
-    spotLight4.angle = Math.PI;
-    spotLight4.penumbra = 0.05;
+    //LightHouse Light
+    var spotLight4 = new THREE.SpotLight( 0xffffb3, 40 );
+    spotLight4.position.set( 6050, 5700, -9900 );
+    spotLight4.angle = 0.05;
+    spotLight4.penumbra = 0;
     spotLight4.decay = 1.0;
-    spotLight4.distance = 8500;
+    spotLight4.distance = 13500;
+
+    //lightHouse
+    var spotLight5 = new THREE.SpotLight( 0xffffb3, 10 );
+    spotLight5.position.set( 5050, 4700, -9000 );
+    spotLight5.angle = Math.PI;
+    spotLight5.penumbra = 0;
+    spotLight5.decay = 1.0;
+    spotLight5.distance = 10500;
 
     //
 
@@ -147,16 +155,28 @@ function init() {
     spotLight.shadow.camera.near = 10;
     spotLight.shadow.camera.far = 200;
 
+    //light taret
+    var targetObject5 = new THREE.Object3D();
+    targetObject5.position.set(100,100,100);
+    scene.add(targetObject5);
+
+    spotLight5.target = targetObject5;
+
+
     scene.add( spotLight );
     scene.add( spotLight2 );
     scene.add( spotLight3 );
     scene.add( spotLight4 );
+    scene.add( spotLight5 );
 
+
+    // Light Array helper
     lightHelper = new THREE.SpotLightHelper( spotLight );
     //scene.add( lightHelper );
 
     lightHelper2 = new THREE.SpotLightHelper( spotLight4 );
     scene.add( lightHelper2 );
+
 
 
     //
@@ -310,7 +330,7 @@ function loadIle() {
 
             gltf.animations; // Array<THREE.AnimationClip>
             gltf.scene; // THREE.Scene
-            gltf.scene.scale.set(20,20,20); // THREE.Scene
+            gltf.scene.scale.set(30,30,30); // THREE.Scene
             gltf.scenes; // Array<THREE.Scene>
             gltf.cameras; // Array<THREE.Camera>
             gltf.asset; // Object
@@ -318,7 +338,7 @@ function loadIle() {
             gltf.scene.rotation.y = -300;
              gltf.scene.position.x = -200;
              gltf.scene.position.z = -10;
-             gltf.scene.position.y = -600;
+             gltf.scene.position.y = -830;
         },
 
         // Fonction appelée lors du chargement
@@ -353,7 +373,7 @@ function grounds() {
     // Liaison material <=> texture
     var groundMaterial = new THREE.MeshLambertMaterial({map: groundTexture});
     // Création de notre mesh
-    var mesh = new THREE.Mesh(new THREE.PlaneBufferGeometry( 20000, 20000), groundMaterial);
+    var mesh = new THREE.Mesh(new THREE.PlaneBufferGeometry( 30000, 30000), groundMaterial);
     // Définition de la position Y de notre plateau
     mesh.position.y = -250;
     // Ajout d'une rotation en x
@@ -375,14 +395,14 @@ function loadHouse() {
 
             gltf.animations; // Array<THREE.AnimationClip>
             gltf.scenes; // Array<THREE.Scene>
-            gltf.scene.scale.set(80,80,80); // THREE.Scene
+            gltf.scene.scale.set(120,120,120); // THREE.Scene
             gltf.cameras; // Array<THREE.Camera>
             gltf.asset; // Object
 
             gltf.scene.rotation.y =  90 * Math.PI / 1;
             gltf.scene.position.x = -100;
             gltf.scene.position.z = -250;
-            gltf.scene.position.y = 152.5;
+            gltf.scene.position.y = 299;
         },
 
         // Fonction appelée lors du chargement
@@ -456,16 +476,16 @@ function loadboat() {
             scene.add(gltf.scene);
 
             gltf.animations; // Array<THREE.AnimationClip>
-            gltf.scene.scale.set(6,6,6); // THREE.Scene
+            gltf.scene.scale.set(15,15,15); // THREE.Scene
             gltf.scenes; // Array<THREE.Scene>
             gltf.cameras; // Array<THREE.Camera>
             gltf.asset; // Object
 
 
-            gltf.scene.rotation.y = 2;
-            gltf.scene.position.x = 2000;
-            gltf.scene.position.z = 200;
-            gltf.scene.position.y = -400;
+            gltf.scene.rotation.y = 4;
+            gltf.scene.position.x = 2200;
+            gltf.scene.position.z = 1500;
+            gltf.scene.position.y = -500;
         },
 
         // Fonction appelée lors du chargement
@@ -501,16 +521,16 @@ function loadLightHouse() {
             scene.add(gltf.scene);
 
             gltf.animations; // Array<THREE.AnimationClip>
-            gltf.scene.scale.set(2,2,2); // THREE.Scene
+            gltf.scene.scale.set(3,3,3); // THREE.Scene
             gltf.scenes; // Array<THREE.Scene>
             gltf.cameras; // Array<THREE.Camera>
             gltf.asset; // Object
 
 
             gltf.scene.rotation.y = 0;
-            gltf.scene.position.x = -4800;
-            gltf.scene.position.z = -2300;
-            gltf.scene.position.y = -700;
+            gltf.scene.position.x = -10000;
+            gltf.scene.position.z = -9000;
+            gltf.scene.position.y = -900;
         },
 
         // Fonction appelée lors du chargement

@@ -89,7 +89,9 @@
       <workItem from="1579700741065" duration="37000" />
       <workItem from="1579968979751" duration="5831000" />
       <workItem from="1580152847428" duration="9585000" />
-      <workItem from="1580200481019" duration="13214000" />
+      <workItem from="1580200481019" duration="13351000" />
+      <workItem from="1580290394670" duration="16000" />
+      <workItem from="1580301305680" duration="5355000" />
     </task>
     <servers />
   </component>
@@ -106,10 +108,11 @@
     </state>
     <state width="889" height="528" key="SwitcherDM/0.0.2560.1040/2560.0.1920.1040@0.0.2560.1040" timestamp="1580156349787" />
     <state width="500" height="445" key="SwitcherDM/0.23.1440.877@0.23.1440.877" timestamp="1580041765294" />
-    <state x="812" y="321" key="com.intellij.ide.util.TipDialog" timestamp="1580152850586">
-      <screen x="0" y="0" width="2560" height="1040" />
+    <state x="364" y="-731" key="com.intellij.ide.util.TipDialog" timestamp="1580290394695">
+      <screen x="-245" y="-1057" width="1920" height="1057" />
     </state>
     <state x="812" y="321" key="com.intellij.ide.util.TipDialog/0.0.2560.1040/2560.0.1920.1040@0.0.2560.1040" timestamp="1580152850586" />
+    <state x="364" y="-731" key="com.intellij.ide.util.TipDialog/0.23.1440.877/-245.-1057.1920.1057@-245.-1057.1920.1057" timestamp="1580290394695" />
     <state x="457" y="294" key="com.intellij.ide.util.TipDialog/0.23.1440.877/-245.-1057.1920.1057@0.23.1440.877" timestamp="1579700741128" />
     <state x="457" y="294" key="com.intellij.ide.util.TipDialog/0.23.1440.877@0.23.1440.877" timestamp="1579282319630" />
     <state x="503" y="385" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1580041766269">
@@ -131,23 +134,35 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/js/main.js</url>
-          <line>224</line>
+          <line>244</line>
           <option name="timeStamp" value="5" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/js/main.js</url>
-          <line>191</line>
+          <line>211</line>
           <option name="timeStamp" value="8" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/js/main.js</url>
-          <line>546</line>
+          <line>566</line>
           <option name="timeStamp" value="9" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/js/main.js</url>
-          <line>531</line>
+          <line>551</line>
           <option name="timeStamp" value="10" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/js/main.js</url>
+          <line>311</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="11" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/js/main.js</url>
+          <line>399</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="13" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
