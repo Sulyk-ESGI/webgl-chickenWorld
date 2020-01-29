@@ -8,11 +8,12 @@ import { PointerLockControls } from '../jsm/controls/PointerLockControls.js';
 var camera, scene, renderer, controls;
 var stats;
 var container;
+var target;
 var objects = [];
-
+var spotLight5, spotLight6;
 var raycaster;
 var spotLight, lightHelper,lightHelper2, shadowCameraHelper, light, shadow;
-
+var clock;
 var moveForward = false;
 var moveBackward = false;
 var moveLeft = false;
@@ -104,48 +105,56 @@ function init() {
 
     //Light test + helper
 
-    var ambient = new THREE.AmbientLight( 0xFFEFB1, 0.5 );
+    var ambient = new THREE.AmbientLight( 0xFFEFB1, 2.5 );
     scene.add( ambient );
 
     //House light
     spotLight = new THREE.SpotLight( 0xffffff, 1.9 );
-    spotLight.position.set( -10, 10, 2 );
+    spotLight.position.set( 0, 100, 2 );
     spotLight.angle = Math.PI ;
     spotLight.penumbra = 0.05;
     spotLight.decay = 1.8;
     spotLight.distance = 2000;
 
-    //First light of boat
-    var spotLight2 = new THREE.SpotLight( 0xff9900, 1.6 );
-    spotLight2.position.set( 1550, 140, -350 );
+    //Second light house
+    var spotLight2 = new THREE.SpotLight( 0xff9900, 3 );
+    spotLight2.position.set( 0, 100, 300 );
     spotLight2.angle = Math.PI
     spotLight2.penumbra = 0.05;
     spotLight2.decay = 1.8;
     spotLight2.distance = 1500;
 
-    //Second light of boat
-    var spotLight3 = new THREE.SpotLight( 0xff9900, 1.6 );
-    spotLight3.position.set( 1850, 150, -500 );
+    //Boat Light
+    var spotLight3 = new THREE.SpotLight( 0xff9900, 4 );
+    spotLight3.position.set( 750, 700, 2400 );
     spotLight3.angle = Math.PI;
     spotLight3.penumbra = 0.05;
     spotLight3.decay = 1.8;
-    spotLight3.distance = 1500;
+    spotLight3.distance = 1900;
 
-    //LightHouse Light
-    var spotLight4 = new THREE.SpotLight( 0xffffb3, 40 );
-    spotLight4.position.set( 6050, 5700, -9900 );
-    spotLight4.angle = 0.05;
-    spotLight4.penumbra = 0;
-    spotLight4.decay = 1.0;
-    spotLight4.distance = 13500;
+    //second boat light
+    var spotLight4 = new THREE.SpotLight( 0xffffb3, 2 );
+    spotLight4.position.set( 1600, 700, 3000 );
+    spotLight4.angle = Math.PI;
+    spotLight4.penumbra = 0.05;
+    spotLight4.decay = 1.8;
+    spotLight4.distance = 1950;
 
-    //lightHouse
-    var spotLight5 = new THREE.SpotLight( 0xffffb3, 10 );
+    //lightHouse global
+    spotLight5 = new THREE.SpotLight( 0xffffb3, 10 );
     spotLight5.position.set( 5050, 4700, -9000 );
     spotLight5.angle = Math.PI;
     spotLight5.penumbra = 0;
     spotLight5.decay = 1.0;
-    spotLight5.distance = 10500;
+    spotLight5.distance = 9500;
+
+    //lightHouse main spot
+    spotLight6 = new THREE.SpotLight( 0xffffb3, 5 );
+    spotLight6.position.set( 5050, 4700, -9000 );
+    spotLight6.angle = 0.05;
+    spotLight6.penumbra = 0.05;
+    spotLight6.decay = 0.2;
+    spotLight6.distance = 13500;
 
     //
 
@@ -155,12 +164,6 @@ function init() {
     spotLight.shadow.camera.near = 10;
     spotLight.shadow.camera.far = 200;
 
-    //light taret
-    var targetObject5 = new THREE.Object3D();
-    targetObject5.position.set(100,100,100);
-    scene.add(targetObject5);
-
-    spotLight5.target = targetObject5;
 
 
     scene.add( spotLight );
@@ -168,13 +171,17 @@ function init() {
     scene.add( spotLight3 );
     scene.add( spotLight4 );
     scene.add( spotLight5 );
+    scene.add( spotLight5 );
+    scene.add( spotLight6 );
+
+
 
 
     // Light Array helper
-    lightHelper = new THREE.SpotLightHelper( spotLight );
-    //scene.add( lightHelper );
+    lightHelper = new THREE.SpotLightHelper( spotLight6 );
+    scene.add( lightHelper );
 
-    lightHelper2 = new THREE.SpotLightHelper( spotLight4 );
+    lightHelper2 = new THREE.SpotLightHelper( spotLight2 );
     scene.add( lightHelper2 );
 
 
@@ -293,6 +300,7 @@ function init() {
     loadtree();
     loadboat();
     loadLightHouse();
+    loadChickenCoop();
 
     //
 
@@ -301,6 +309,7 @@ function init() {
 }
 
 function render() {
+
 
     lightHelper.update();
     lightHelper2.update();
@@ -344,6 +353,52 @@ function loadIle() {
         // Fonction appelée lors du chargement
         function (xhr) {
             console.log((xhr.loaded / xhr.total * 100) + '% loaded ile');
+        },
+
+        // Fonction appelée lors d'une quelconque erreur
+        function (error) {
+            console.log('Une erreur est survenue');
+            console.log(error)
+        }
+    );
+
+}
+
+function loadChickenCoop() {
+    var loader = new GLTFLoader();
+    loader.load(
+        // Chemin de la ressource
+        './src/objects/chicken_coop/scene.gltf',
+        // called when the resource is loaded
+        function (gltf) {
+            gltf.scene.traverse( function ( child ) {
+
+                if ( child.isMesh ) {
+
+                    child.castShadow = true;
+                    child.receiveShadow = true;
+
+                }
+
+            } );
+            scene.add(gltf.scene);
+
+            gltf.animations; // Array<THREE.AnimationClip>
+            gltf.scene; // THREE.Scene
+            gltf.scene.scale.set(70,70,70); // THREE.Scene
+            gltf.scenes; // Array<THREE.Scene>
+            gltf.cameras; // Array<THREE.Camera>
+            gltf.asset; // Object
+
+            gltf.scene.rotation.y = 3;
+            gltf.scene.position.x = 800;
+            gltf.scene.position.z = 1200;
+            gltf.scene.position.y = -65;
+        },
+
+        // Fonction appelée lors du chargement
+        function (xhr) {
+            console.log((xhr.loaded / xhr.total * 100) + '% loaded chicken coop');
         },
 
         // Fonction appelée lors d'une quelconque erreur
@@ -569,6 +624,7 @@ function animate() {
     requestAnimationFrame( animate );
 
 
+
     if ( controls.isLocked === true ) {
 
         raycaster.ray.origin.copy( controls.getObject().position );
@@ -616,6 +672,7 @@ function animate() {
         prevTime = time;
 
     }
+
 
 
     stats.update();

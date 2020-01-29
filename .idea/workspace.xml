@@ -42,6 +42,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/New Scratch File" value="JavaScript" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
@@ -52,12 +53,13 @@
     <property name="nodejs_package_manager_path" value="npm" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\wamp64\www\webgl" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\wamp64\www\webgl\esgi\src\textures" />
       <recent name="C:\wamp64\www\webgl\esgi\src\js" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/js" />
+      <recent name="C:\wamp64\www\webgl" />
     </key>
   </component>
   <component name="ServiceViewManager">
@@ -91,7 +93,8 @@
       <workItem from="1580152847428" duration="9585000" />
       <workItem from="1580200481019" duration="13351000" />
       <workItem from="1580290394670" duration="16000" />
-      <workItem from="1580301305680" duration="5355000" />
+      <workItem from="1580301305680" duration="5756000" />
+      <workItem from="1580317677615" duration="4584000" />
     </task>
     <servers />
   </component>
@@ -108,21 +111,21 @@
     </state>
     <state width="889" height="528" key="SwitcherDM/0.0.2560.1040/2560.0.1920.1040@0.0.2560.1040" timestamp="1580156349787" />
     <state width="500" height="445" key="SwitcherDM/0.23.1440.877@0.23.1440.877" timestamp="1580041765294" />
-    <state x="364" y="-731" key="com.intellij.ide.util.TipDialog" timestamp="1580290394695">
-      <screen x="-245" y="-1057" width="1920" height="1057" />
+    <state x="457" y="294" key="com.intellij.ide.util.TipDialog" timestamp="1580317697272">
+      <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state x="812" y="321" key="com.intellij.ide.util.TipDialog/0.0.2560.1040/2560.0.1920.1040@0.0.2560.1040" timestamp="1580152850586" />
     <state x="364" y="-731" key="com.intellij.ide.util.TipDialog/0.23.1440.877/-245.-1057.1920.1057@-245.-1057.1920.1057" timestamp="1580290394695" />
     <state x="457" y="294" key="com.intellij.ide.util.TipDialog/0.23.1440.877/-245.-1057.1920.1057@0.23.1440.877" timestamp="1579700741128" />
-    <state x="457" y="294" key="com.intellij.ide.util.TipDialog/0.23.1440.877@0.23.1440.877" timestamp="1579282319630" />
+    <state x="457" y="294" key="com.intellij.ide.util.TipDialog/0.23.1440.877@0.23.1440.877" timestamp="1580317697272" />
     <state x="503" y="385" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1580041766269">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state x="503" y="385" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.23.1440.877@0.23.1440.877" timestamp="1580041766269" />
-    <state x="301" y="49" width="837" height="825" key="find.popup" timestamp="1579284470149">
+    <state x="301" y="49" width="837" height="825" key="find.popup" timestamp="1580322152125">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
-    <state x="301" y="49" width="837" height="825" key="find.popup/0.23.1440.877@0.23.1440.877" timestamp="1579284470149" />
+    <state x="301" y="49" width="837" height="825" key="find.popup/0.23.1440.877@0.23.1440.877" timestamp="1580322152125" />
     <state x="385" y="213" width="670" height="158" key="search.everywhere.popup" timestamp="1580232406582">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
@@ -134,34 +137,27 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/js/main.js</url>
-          <line>244</line>
-          <option name="timeStamp" value="5" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/src/js/main.js</url>
-          <line>211</line>
+          <line>218</line>
           <option name="timeStamp" value="8" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/js/main.js</url>
-          <line>566</line>
+          <line>621</line>
           <option name="timeStamp" value="9" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/js/main.js</url>
-          <line>551</line>
+          <line>606</line>
           <option name="timeStamp" value="10" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/js/main.js</url>
-          <line>311</line>
-          <properties lambdaOrdinal="-1" />
+          <line>320</line>
           <option name="timeStamp" value="11" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/js/main.js</url>
-          <line>399</line>
-          <properties lambdaOrdinal="-1" />
+          <line>454</line>
           <option name="timeStamp" value="13" />
         </line-breakpoint>
       </breakpoints>
