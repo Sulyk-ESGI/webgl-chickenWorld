@@ -4,6 +4,7 @@ import { GLTFLoader } from './GLTFLoader.js'
 
 
 import { PointerLockControls } from '../jsm/controls/PointerLockControls.js';
+import {DynamicCopyUsage} from "../../build/three.module";
 
 var camera, scene, renderer, controls;
 var stats;
@@ -312,11 +313,16 @@ function init() {
     loadChickenCoop(600,-65,800,2.3);
     loadChicken(600,-58,800,0);
 
-    loadFlower(400,-57,-100,0)
-    loadFlower(-600,-57,300,0)
-    loadFlower(1200,-57,450,0)
-    loadFlower(100,-57,100,0)
-    loadFlower(100,-57,100,0)
+    loadFlower(400,-57,-100,0);
+    loadFlower(-600,-57,300,0);
+    loadFlower(1200,-57,450,0);
+    loadFlower(100,-57,100,0);
+    loadFlower(100,-57,100,0);
+
+    loadCannon(1200,-30,-1200,4.5);
+    loadCannon(1400,-30,-900,3.75);
+    loadCannon(1600,-30,-600,3);
+
 
     //
 
@@ -368,6 +374,52 @@ function loadIle() {
         // Fonction appelée lors du chargement
         function (xhr) {
             console.log((xhr.loaded / xhr.total * 100) + '% loaded ile');
+        },
+
+        // Fonction appelée lors d'une quelconque erreur
+        function (error) {
+            console.log('Une erreur est survenue');
+            console.log(error)
+        }
+    );
+
+}
+
+function loadCannon(Px,Py,Pz,Rt) {
+    var loader = new GLTFLoader();
+    loader.load(
+        // Chemin de la ressource
+        './src/objects/cannon/scene.gltf',
+        // called when the resource is loaded
+        function (gltf) {
+            gltf.scene.traverse( function ( child ) {
+
+                if ( child.isMesh ) {
+
+                    child.castShadow = false;
+                    child.receiveShadow = true;
+
+                }
+
+            } );
+            scene.add(gltf.scene);
+
+            gltf.animations; // Array<THREE.AnimationClip>
+            gltf.scene; // THREE.Scene
+            gltf.scene.scale.set(20,20,20); // THREE.Scene
+            gltf.scenes; // Array<THREE.Scene>
+            gltf.cameras; // Array<THREE.Camera>
+            gltf.asset; // Object
+
+            gltf.scene.rotation.y = Rt;
+            gltf.scene.position.x = Px;
+            gltf.scene.position.z = Pz;
+            gltf.scene.position.y = Py;
+        },
+
+        // Fonction appelée lors du chargement
+        function (xhr) {
+            console.log((xhr.loaded / xhr.total * 100) + '% loaded cannon');
         },
 
         // Fonction appelée lors d'une quelconque erreur
