@@ -42,8 +42,7 @@ function init() {
     container = document.createElement('div');
     document.body.appendChild(container);
 
-    renderer = new THREE.WebGLRenderer();
-    renderer.shadowMap.enabled = true;
+
 
     camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 1, 30500 );
     camera.position.y = 0;
@@ -510,7 +509,7 @@ function grounds() {
     // Pré-chargement d'une texture
     var loader = new THREE.TextureLoader();
     // Chargement de la texture du sol
-    var groundTexture = loader.load('src/textures/waterTest.jpg');
+    var groundTexture = loader.load('src/textures/waterNew.jpeg');
     // Activation du mode wrap pour la répétition de la texture
     groundTexture.wrapS = groundTexture.wrapT = THREE.RepeatWrapping;
     groundTexture.color = 0x1F4F4F;
