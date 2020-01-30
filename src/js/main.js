@@ -481,7 +481,7 @@ function grounds() {
     // Pré-chargement d'une texture
     var loader = new THREE.TextureLoader();
     // Chargement de la texture du sol
-    var groundTexture = loader.load('src/textures/waterTest.jpg');
+    var groundTexture = loader.load('src/textures/waterNew.jpeg');
     // Activation du mode wrap pour la répétition de la texture
     groundTexture.wrapS = groundTexture.wrapT = THREE.RepeatWrapping;
     groundTexture.color = 0x1F4F4F;
@@ -501,8 +501,12 @@ function grounds() {
     mesh.rotation.x = -Math.PI / 2;
     // Activation des ombres sur le sol
     mesh.receiveShadow = true;
+
+
+
     // Ajout à la scène
     scene.add(mesh);
+
 }
 
 function loadHouse() {
@@ -581,6 +585,18 @@ function loadtree() {
             gltf.scene.position.x = 12500;
             gltf.scene.position.z = -2200;
             gltf.scene.position.y = -3500;
+
+            var sound2 = new THREE.PositionalAudio( listener );
+
+            var audioLoader = new THREE.AudioLoader();
+            // load a sound and set it as theioLoader();
+            audioLoader.load( './src/sound/seaSound.ogg', function( buffer ) {
+                sound2.setBuffer( buffer );
+                sound2.setRefDistance( 200 );
+                sound2.play();
+
+            });
+            gltf.scene.add( sound2);
         },
 
         // Fonction appelée lors du chargement
@@ -627,6 +643,19 @@ function loadboat() {
             gltf.scene.position.x = 2200;
             gltf.scene.position.z = 1500;
             gltf.scene.position.y = -500;
+
+            //audio
+            var sound1 = new THREE.PositionalAudio( listener );
+
+            // load a sound and set it as the PositionalAudio object's buffer
+            var audioLoader = new THREE.AudioLoader();
+            audioLoader.load( './src/sound/seaSound.ogg', function( buffer ) {
+                sound1.setBuffer( buffer );
+                sound1.setRefDistance( 50 );
+                sound1.play();
+
+            });
+            gltf.scene.add( sound1 );
         },
 
         // Fonction appelée lors du chargement
