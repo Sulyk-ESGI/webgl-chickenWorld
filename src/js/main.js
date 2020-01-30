@@ -1,10 +1,7 @@
 import * as THREE from '../../build/three.module.js';
 import  Stats from './stats.module.js';
 import { GLTFLoader } from './GLTFLoader.js'
-
-
 import { PointerLockControls } from '../jsm/controls/PointerLockControls.js';
-import {DynamicCopyUsage} from "../../build/three.module";
 
 var camera, scene, renderer, controls;
 var stats;
@@ -24,10 +21,6 @@ var canJump = false;
 var prevTime = performance.now();
 var velocity = new THREE.Vector3();
 var direction = new THREE.Vector3();
-//var vertex = new THREE.Vector3();
-//var color = new THREE.Color();
-
-
 
 /////////////////////////////////////////
 // 		Paramètres des contrôles   	   //
@@ -39,8 +32,6 @@ var params = {
 };
 
 gui.add(params, 'movSpeed').name('Speed').min(0).max(60).step(1);
-
-
 
 init();
 animate();
@@ -158,7 +149,6 @@ function init() {
     spotLight6.distance = 13500;
 
     //Spotlight shadow
-
     spotLight3.castShadow = true;
     spotLight3.shadow.mapSize.width = 512;
     spotLight3.shadow.mapSize.height = 512;
@@ -177,7 +167,6 @@ function init() {
     spotLight6.shadow.camera.near = 10;
     spotLight6.shadow.camera.far = 500;
 
-
     scene.add( spotLight );
     scene.add( spotLight2 );
     scene.add( spotLight3 );
@@ -185,7 +174,6 @@ function init() {
     scene.add( spotLight5 );
     scene.add( spotLight5 );
     scene.add( spotLight6 );
-
 
     // Light Array helper
     lightHelper = new THREE.SpotLightHelper( spotLight6 );
@@ -290,7 +278,6 @@ function init() {
     raycaster = new THREE.Raycaster( new THREE.Vector3());
     //scene.add(new THREE.ArrowHelper(raycaster.ray.direction, raycaster.ray.origin, 100000, 0xff0000) );
 
-
     renderer = new THREE.WebGLRenderer( { antialias: true } );
     renderer.setPixelRatio( window.devicePixelRatio );
     renderer.setSize( window.innerWidth, window.innerHeight );
@@ -318,11 +305,6 @@ function init() {
     loadFlower(1200,-57,450,0);
     loadFlower(100,-57,100,0);
     loadFlower(100,-57,100,0);
-
-    loadCannon(1200,-30,-1200,4.5);
-    loadCannon(1400,-30,-900,3.75);
-    loadCannon(1600,-30,-600,3);
-
 
     //
 
