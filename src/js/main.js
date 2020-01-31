@@ -7,6 +7,7 @@ var camera, scene, renderer, controls;
 var stats;
 var container;
 var target;
+var listener;
 var objects = [];
 var spotLight5, spotLight6;
 var raycaster;
@@ -51,6 +52,10 @@ function init() {
     camera.rotation.y= 4;
     camera.rotation.x = 0;
     camera.rotation.z = 0;
+
+    //Audio listener
+    listener = new THREE.AudioListener();
+    camera.add( listener );
 
     //Creation de la scene
     // Pré-chargement d'une texture
@@ -366,51 +371,7 @@ function loadIle() {
 
 }
 
-function loadCannon(Px,Py,Pz,Rt) {
-    var loader = new GLTFLoader();
-    loader.load(
-        // Chemin de la ressource
-        './src/objects/cannon/scene.gltf',
-        // called when the resource is loaded
-        function (gltf) {
-            gltf.scene.traverse( function ( child ) {
 
-                if ( child.isMesh ) {
-
-                    child.castShadow = false;
-                    child.receiveShadow = true;
-
-                }
-
-            } );
-            scene.add(gltf.scene);
-
-            gltf.animations; // Array<THREE.AnimationClip>
-            gltf.scene; // THREE.Scene
-            gltf.scene.scale.set(20,20,20); // THREE.Scene
-            gltf.scenes; // Array<THREE.Scene>
-            gltf.cameras; // Array<THREE.Camera>
-            gltf.asset; // Object
-
-            gltf.scene.rotation.y = Rt;
-            gltf.scene.position.x = Px;
-            gltf.scene.position.z = Pz;
-            gltf.scene.position.y = Py;
-        },
-
-        // Fonction appelée lors du chargement
-        function (xhr) {
-            console.log((xhr.loaded / xhr.total * 100) + '% loaded cannon');
-        },
-
-        // Fonction appelée lors d'une quelconque erreur
-        function (error) {
-            console.log('Une erreur est survenue');
-            console.log(error)
-        }
-    );
-
-}
 
 function loadChicken(Px,Py,Pz,Rt) {
     var loader = new GLTFLoader();
@@ -420,12 +381,9 @@ function loadChicken(Px,Py,Pz,Rt) {
         // called when the resource is loaded
         function (gltf) {
             gltf.scene.traverse( function ( child ) {
-
                 if ( child.isMesh ) {
-
                     child.castShadow = true;
                     child.receiveShadow = true;
-
                 }
 
             } );
@@ -442,6 +400,19 @@ function loadChicken(Px,Py,Pz,Rt) {
             gltf.scene.position.x = Px;
             gltf.scene.position.z = Pz;
             gltf.scene.position.y = Py;
+
+
+            var sound = new THREE.PositionalAudio( listener );
+
+            // load a sound and set it as the PositionalAudio object's buffer
+            var audioLoader = new THREE.AudioLoader();
+            audioLoader.load( './src/sound/poulSound.ogg', function( buffer ) {
+                sound.setBuffer( buffer );
+                sound.setRefDistance( 20 );
+                sound.play();
+
+                gltf.scene.add( sound );
+            });
         },
 
         // Fonction appelée lors du chargement
@@ -529,8 +500,12 @@ function grounds() {
     mesh.rotation.x = -Math.PI / 2;
     // Activation des ombres sur le sol
     mesh.receiveShadow = true;
+
+
+
     // Ajout à la scène
     scene.add(mesh);
+
 }
 
 function loadHouse() {
@@ -609,6 +584,18 @@ function loadtree() {
             gltf.scene.position.x = 12500;
             gltf.scene.position.z = -2200;
             gltf.scene.position.y = -3500;
+
+            var sound2 = new THREE.PositionalAudio( listener );
+
+            var audioLoader = new THREE.AudioLoader();
+            // load a sound and set it as theioLoader();
+            audioLoader.load( './src/sound/seaSound.ogg', function( buffer ) {
+                sound2.setBuffer( buffer );
+                sound2.setRefDistance( 200 );
+                sound2.play();
+
+            });
+            gltf.scene.add( sound2);
         },
 
         // Fonction appelée lors du chargement
@@ -655,6 +642,19 @@ function loadboat() {
             gltf.scene.position.x = 2200;
             gltf.scene.position.z = 1500;
             gltf.scene.position.y = -500;
+
+            //audio
+            var sound1 = new THREE.PositionalAudio( listener );
+
+            // load a sound and set it as the PositionalAudio object's buffer
+            var audioLoader = new THREE.AudioLoader();
+            audioLoader.load( './src/sound/seaSound.ogg', function( buffer ) {
+                sound1.setBuffer( buffer );
+                sound1.setRefDistance( 50 );
+                sound1.play();
+
+            });
+            gltf.scene.add( sound1 );
         },
 
         // Fonction appelée lors du chargement
