@@ -43,8 +43,6 @@ function init() {
     container = document.createElement('div');
     document.body.appendChild(container);
 
-
-
     camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 1, 30500 );
     camera.position.y = 0;
     camera.position.x= 150;
@@ -151,6 +149,13 @@ function init() {
     spotLight6.penumbra = 0.05;
     spotLight6.decay = 0.2;
     spotLight6.distance = 13500;
+
+    //target position spotlight6
+    var targetObject = new THREE.Object3D();
+    targetObject.position.set(0,1000,0);
+    scene.add(targetObject);
+
+    spotLight6.target = targetObject;
 
     //Spotlight shadow
     spotLight3.castShadow = true;
