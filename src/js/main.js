@@ -2,6 +2,7 @@ import * as THREE from '../../build/three.module.js';
 import  Stats from './stats.module.js';
 import { GLTFLoader } from './GLTFLoader.js'
 import { PointerLockControls } from '../jsm/controls/PointerLockControls.js';
+import { FBXLoader } from './FBXLoader.js';
 
 var camera, scene, renderer, controls;
 var stats;
@@ -12,7 +13,10 @@ var objects = [];
 var spotLight5, spotLight6;
 var raycaster;
 var spotLight, lightHelper,lightHelper2, shadowCameraHelper, light, shadow;
-var clock;
+var clock = new THREE.Clock();
+var mixer;
+var targetObject;
+var rotationX = 0;
 var moveForward = false;
 var moveBackward = false;
 var moveLeft = false;
@@ -151,8 +155,8 @@ function init() {
     spotLight6.distance = 13500;
 
     //target position spotlight6
-    var targetObject = new THREE.Object3D();
-    targetObject.position.set(0,1000,0);
+    targetObject = new THREE.Object3D();
+
     scene.add(targetObject);
 
     spotLight6.target = targetObject;
@@ -186,10 +190,10 @@ function init() {
 
     // Light Array helper
     lightHelper = new THREE.SpotLightHelper( spotLight6 );
-    scene.add( lightHelper );
+    //scene.add( lightHelper );
 
     lightHelper2 = new THREE.SpotLightHelper( spotLight2 );
-    scene.add( lightHelper2 );
+    //scene.add( lightHelper2 );
 
     //
 
@@ -315,19 +319,46 @@ function init() {
     loadFlower(100,-57,100,0);
     loadFlower(100,-57,100,0);
 
+    loadOldMan();
+
     //
-
     window.addEventListener( 'resize', onWindowResize, false );
-
 }
 
 function render() {
 
-    lightHelper.update();
-    lightHelper2.update();
-
+    //lightHelper.update();
+    //lightHelper2.update();
     renderer.render( scene, camera );
 
+}
+
+function loadOldMan(){
+    // model
+    var loader = new FBXLoader();
+    loader.load( './src/objects/oldMan/SittingOldMan.fbx',
+        function ( object ) {
+
+        mixer = new THREE.AnimationMixer( object );
+
+        var action = mixer.clipAction( object.animations[ 0 ] );
+        action.play();
+
+        object.traverse( function ( child ) {
+
+            if ( child.isMesh ) {
+                child.castShadow = true;
+                child.receiveShadow = true;
+            }
+
+        } );
+            scene.add( object );
+            object.scale.set(1.2,1.2,1.2); // THREE.Scene
+            object.rotation.y = 4;
+            object.position.x = 2000;
+            object.position.z = 930;
+            object.position.y = 145;
+    } );
 }
 
 function loadIle() {
@@ -375,8 +406,6 @@ function loadIle() {
     );
 
 }
-
-
 
 function loadChicken(Px,Py,Pz,Rt) {
     var loader = new GLTFLoader();
@@ -496,7 +525,7 @@ function grounds() {
     // Encodage avec sRGBEncoding pour une image plus nette
     groundTexture.encoding = THREE.sRGBEncoding;
     // Liaison material <=> texture
-    var groundMaterial = new THREE.MeshLambertMaterial({map: groundTexture});
+    var groundMaterial = new THREE.MeshPhongMaterial({map: groundTexture});
     // Création de notre mesh
     var mesh = new THREE.Mesh(new THREE.PlaneBufferGeometry( 30000, 30000), groundMaterial);
     // Définition de la position Y de notre plateau
@@ -627,10 +656,8 @@ function loadboat() {
             gltf.scene.traverse( function ( child ) {
 
                 if ( child.isMesh ) {
-
                     child.castShadow = true;
-                    child.receiveShadow = true;
-
+                    child.receiveShadow = false;
                 }
 
             } );
@@ -787,8 +814,17 @@ function animate() {
     requestAnimationFrame( animate );
 
 
+   rotationX += 10;
+
+   if (rotationX > 6000){
+       rotationX = -6000;
+   }
+    var delta = clock.getDelta();
+    if ( mixer ) mixer.update( delta );
 
     if ( controls.isLocked === true ) {
+
+
 
         raycaster.ray.origin.copy( controls.getObject().position );
 
@@ -836,6 +872,8 @@ function animate() {
 
     }
 
+
+    targetObject.position.set(rotationX,100,0);
 
 
     stats.update();
