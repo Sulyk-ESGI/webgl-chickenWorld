@@ -4,11 +4,13 @@ import { GLTFLoader } from './GLTFLoader.js'
 import { PointerLockControls } from '../jsm/controls/PointerLockControls.js';
 import { FBXLoader } from './FBXLoader.js';
 
+var rainGeo,flash, rain,rainDrop, rainCount = 15000;
 var camera, scene, renderer, controls;
 var stats;
 var container;
 var target;
 var listener;
+var cloudParticles = [];
 var objects = [];
 var spotLight5, spotLight6;
 var raycaster;
@@ -326,6 +328,9 @@ function init() {
     loadFlower(100,-57,100,0);
     loadFlower(100,-57,100,0);
 
+
+    rains();
+
     loadOldMan();
 
     //
@@ -337,6 +342,71 @@ function render() {
     //lightHelper.update();
     //lightHelper2.update();
     renderer.render( scene, camera );
+
+}
+
+function getRandomInt(min, max) {
+    var min = Math.ceil(min);
+    var max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min)) + min;
+}
+
+function cloud() {
+
+    function getRandomInt(min, max) {
+       var min = Math.ceil(min);
+        var max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min)) + min;
+    }
+
+    let loader = new THREE.TextureLoader();
+    loader.load("./src/textures/cloud.png", function(texture){
+        var cloudGeo = new THREE.PlaneBufferGeometry(5000,5000);
+        var cloudMaterial = new THREE.MeshLambertMaterial({
+            map: texture,
+            transparent: true
+        });
+        for(let p=0; p<250; p++) {
+            let cloud = new THREE.Mesh(cloudGeo,cloudMaterial);
+            cloud.position.set(
+                getRandomInt(-200,2000),
+                5000,
+                getRandomInt(-200,2000)
+            );
+            cloud.rotation.x = 1.16;
+            cloud.rotation.y = -0.12;
+            cloud.rotation.z = Math.random()*360;
+            cloud.material.opacity = 0.8;
+            scene.add(cloud);
+
+        }
+
+    });
+};
+
+function rains() {
+
+    rainGeo = new THREE.Geometry();
+    for(let i=0;i<rainCount;i++) {
+        rainDrop = new THREE.Vector3(
+            getRandomInt(-8000,8000),
+            Math.random() * 10000 - 5000,
+            getRandomInt(-8000,8000)
+        );
+        rainDrop.velocity = {};
+        rainDrop.velocity = 0;
+        rainGeo.vertices.push(rainDrop);
+    }
+    var rainMaterial = new THREE.PointsMaterial({
+        color: 0xaaaaaa,
+        size: 1,
+        transparent: true
+    });
+     rain = new THREE.Points(rainGeo,rainMaterial);
+    console.log()
+    scene.add(rain);
+
+
 
 }
 
@@ -815,7 +885,21 @@ function onWindowResize() {
 
 function animate() {
 
+
     requestAnimationFrame( animate );
+
+    cloudParticles.forEach(p => {
+        p.rotation.z -=0.002;
+    });
+    rainGeo.vertices.forEach(p => {
+        p.velocity -= 0.2 + Math.random() * 0.1;
+        p.y += p.velocity;
+        if (p.y < -4000) {
+            p.y = 4000;
+            p.velocity = 0;
+        }
+    });
+    rainGeo.verticesNeedUpdate = true;
 
    rotationX += 10;
 
