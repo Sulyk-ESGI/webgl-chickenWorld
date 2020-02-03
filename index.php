@@ -10,8 +10,7 @@
 
     <body>
 
-        <div class="page-bg">
-
+        <div class="page-bg" id="main-loader">
             <button id="playerButton" onclick="myFunction()">
                 Lancer
             </button>
@@ -38,13 +37,31 @@
                     Sauter: ESPACE<br/>
                     Regarder: SOURIS
                 </div>
-
-                <script type="text/javascript" src="src/js/dat.gui.min.js"></script>
-                <script type="module" src="src/js/main.js"></script>
-
             </div>
-
         </div>
+
+        <script type="text/javascript" src="src/js/dat.gui.min.js"></script>
+        <script type="module" src="src/js/main.js"></script>
+
+        <script>
+            buttonReady = document.getElementById("playerButton");
+            document.getElementById( "playerButton" ).style.display = 'none';
+
+            var x = setTimeout(showButton, 5000);
+
+            function showButton() {
+                document.getElementById( "playerButton" ).style.display = 'inline';
+            }
+
+
+
+
+            function myFunction(){
+                document.getElementById( "main-loader" ).style.display = 'none';
+            }
+        </script>
+
+
 
     </body>
 </html>
