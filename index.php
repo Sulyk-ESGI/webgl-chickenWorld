@@ -12,7 +12,7 @@
 
         <div class="page-bg">
 
-            <button>
+            <button id="playerButton" onclick="myFunction()">
                 Lancer
             </button>
 
@@ -38,10 +38,12 @@
                     Sauter: ESPACE<br/>
                     Regarder: SOURIS
                 </div>
+
+                <script type="text/javascript" src="src/js/dat.gui.min.js"></script>
+                <script type="module" src="src/js/main.js"></script>
+
             </div>
 
-            <script type="module" src="src/js/main.js"></script>
-            <script type="text/javascript" src="src/js/dat.gui.min.js"></script>
         </div>
 
     </body>

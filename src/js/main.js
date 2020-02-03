@@ -29,7 +29,11 @@ var direction = new THREE.Vector3();
 
 
 document.getElementById( "game" ).style.display = 'none';
+document.getElementById( "playerButton" );
 
+function myFunction(){
+    console.log("salut");
+}
 
 /////////////////////////////////////////
 // 		Paramètres des contrôles   	   //
@@ -43,8 +47,11 @@ gui.add(params, 'movSpeed').name('Speed').min(0).max(60).step(1);
 
 
 
+
+
 init();
 animate();
+
 
 
 function init() {
