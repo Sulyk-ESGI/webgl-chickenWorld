@@ -16,7 +16,7 @@
             </button>
 
             <div class="preloader">
-                <div class="preloader-box">
+                <div class="preloader-box" id="preloader-id">
                     <div>L</div>
                     <div>O</div>
                     <div>A</div>
@@ -47,10 +47,11 @@
             buttonReady = document.getElementById("playerButton");
             document.getElementById( "playerButton" ).style.display = 'none';
 
-            var x = setTimeout(showButton, 5000);
+            var x = setTimeout(showButton, 7000);
 
             function showButton() {
                 document.getElementById( "playerButton" ).style.display = 'inline';
+                document.getElementById( "preloader-id" ).style.display = 'none';
             }
 
 
