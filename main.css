@@ -47,36 +47,13 @@ canvas {
 	z-index: 1; /* TODO Solve this in HTML */
 }
 
-a, input, select {
+a, input,button, select {
 	pointer-events: auto;
-}
-
-.dg.ac {
-	-moz-user-select: none;
-	-webkit-user-select: none;
-	-ms-user-select: none;
-	user-select: none;
-	z-index: 2 !important; /* TODO Solve this in HTML */
-}
-
-#overlay {
-	position: absolute;
-	z-index: 2;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height:100%;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	opacity: 1;
-	background-color: #000000;
-	color: #ffffff;
 }
 
 .page-bg {
 	position: absolute;
-	z-index: 1;
+	z-index: 9;
 	background: url('./src/textures/wallpaper.jpg') center;
 	-webkit-filter: blur(0px);
 	width: 100%;
@@ -177,23 +154,19 @@ button {
 	position:relative;
 	padding: 10px 20px;
 	border: none;
-	background: none;
 	cursor: pointer;
-	z-index: 1;
-
+	z-index: 5;
 	font-family: "Source Code Pro";
 	font-weight: 900;
 	text-transform: uppercase;
 	font-size: 30px;
 	color: var(--text-color);
-
 	background-color: var(--btn-color);
 	box-shadow: var(--shadow-color) 2px 2px 22px;
 	border-radius: 4px;
-	z-index: 0;
-	overflow: hidden;
+	z-index: 20;
 	top: 50%;
-	left: 44%;
+	left: 42%;
 }
 
 button:focus {
@@ -201,53 +174,9 @@ button:focus {
 	box-shadow: var(--btn-color) 2px 2px 22px;
 }
 
-.right::after, button::after {
-	content: var(--content);
-	display: block;
-	position: absolute;
-	white-space: nowrap;
-	padding: 40px 40px;
-	pointer-events:none;
-}
-
-button::after{
-	font-weight: 200;
-	top: -30px;
-	left: -20px;
-}
-
-.right, .left {
-	position: absolute;
-	width: 100%;
-	height: 100%;
-	top: 0;
-}
-.right {
-	left: 66%;
-}
-.left {
-	right: 66%;
-}
-.right::after {
-	top: -30px;
-	left: calc(-66% - 20px);
-
-	background-color: var(--bg-color);
-	color:transparent;
-	transition: transform .4s ease-out;
-	transform: translate(0, -90%) rotate(0deg)
-}
-
-button:hover .right::after {
-	transform: translate(0, -47%) rotate(0deg)
-}
-
-button .right:hover::after {
-	transform: translate(0, -50%) rotate(-7deg)
-}
-
-button .left:hover ~ .right::after {
-	transform: translate(0, -50%) rotate(7deg)
+button:hover {
+	background-color: #4CAF50; /* Green */
+	color: white;
 }
 
 /* bubbles */
@@ -275,4 +204,39 @@ button::before {
 	to {
 		transform: translate(0, -66.666%);
 	}
+}
+
+#blocker {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+}
+
+#instructions {
+	width: 100%;
+	height: 100%;
+
+	display: -webkit-box;
+	display: -moz-box;
+	display: box;
+
+	-webkit-box-orient: horizontal;
+	-moz-box-orient: horizontal;
+	box-orient: horizontal;
+
+	-webkit-box-pack: center;
+	-moz-box-pack: center;
+	box-pack: center;
+
+	-webkit-box-align: center;
+	-moz-box-align: center;
+	box-align: center;
+
+	color: #ffffff;
+	text-align: center;
+	font-family: Arial;
+	font-size: 14px;
+	line-height: 24px;
+
+	cursor: pointer;
 }
