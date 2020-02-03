@@ -1,3 +1,11 @@
+@import url('https://fonts.googleapis.com/css?family=Source+Code+Pro:200,900');
+:root {
+	--text-color: hsla(210, 50%, 85%, 1);
+	--shadow-color: hsla(210, 40%, 52%, .4);
+	--btn-color: hsl(210, 80%, 42%);
+	--bg-color: #141218;
+}
+
 body {
 	margin: 0;
 	background-color: #000;
@@ -6,6 +14,8 @@ body {
 	font-size: 13px;
 	line-height: 24px;
 	overscroll-behavior: none;
+	width: 100%;
+	height: 100%;
 }
 
 a {
@@ -17,10 +27,6 @@ a:hover {
 	text-decoration: underline;
 }
 
-button {
-	cursor: pointer;
-	text-transform: uppercase;
-}
 
 canvas {
 	display: block;
@@ -41,7 +47,7 @@ canvas {
 	z-index: 1; /* TODO Solve this in HTML */
 }
 
-a, button, input, select {
+a, input, select {
 	pointer-events: auto;
 }
 
@@ -68,20 +74,205 @@ a, button, input, select {
 	color: #ffffff;
 }
 
-#overlay > div {
+.page-bg {
+	position: absolute;
+	z-index: 1;
+	background: url('./src/textures/wallpaper.jpg') center;
+	-webkit-filter: blur(0px);
+	width: 100%;
+	height:100%;
+}
+
+.preloader {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	right: 0px;
+	bottom: 0px;
+	background: -webkit-radial-gradient(rgba(0,0,0,0) 50%,rgba(0,0,0,0.8));
+	z-index: 10;
+}
+
+.preloader > .preloader-box {
+	position: absolute;
+	width: 345px;
+	height: 30px;
+	top: 40%;
+	left: 50%;
+	margin: -15px 0 0 -150px;
+	-webkit-perspective: 200px;
+}
+
+.preloader .preloader-box > div {
+	position: relative;
+	width: 30px;
+	height: 30px;
+	background: #CCC;
+	float: left;
 	text-align: center;
+	line-height: 30px;
+	font-family: Verdana;
+	font-size: 20px;
+	color: #FFF;
 }
 
-#overlay > div > button {
-	height: 20px;
-	background: transparent;
-	color: #ffffff;
-	outline: 1px solid #ffffff;
-	border: 0px;
+.preloader .preloader-box > div:nth-child(1) {
+	background: #3366FF;
+	margin-right: 15px;
+	-webkit-animation: movement 600ms ease 0ms infinite alternate;
+}
+.preloader .preloader-box > div:nth-child(2) {
+	background: #3366FF;
+	margin-right: 15px;
+	-webkit-animation: movement 600ms ease 75ms infinite alternate;
+}
+.preloader .preloader-box > div:nth-child(3) {
+	background: #3366FF;
+	margin-right: 15px;
+	-webkit-animation: movement 600ms ease 150ms infinite alternate;
+}
+
+.preloader .preloader-box > div:nth-child(4) {
+	background: #3366FF;
+	margin-right: 15px;
+	-webkit-animation: movement 600ms ease 225ms infinite alternate;
+}
+
+.preloader .preloader-box > div:nth-child(5) {
+	background: #3366FF;
+	margin-right: 15px;
+	-webkit-animation: movement 600ms ease 300ms infinite alternate;
+}
+
+.preloader .preloader-box > div:nth-child(6) {
+	background: #3366FF;
+	margin-right: 15px;
+	-webkit-animation: movement 600ms ease 375ms infinite alternate;
+}
+
+.preloader .preloader-box > div:nth-child(7) {
+	background: #3366FF;
+	margin-right: 15px;
+	-webkit-animation: movement 600ms ease 450ms infinite alternate;
+}
+
+.preloader .preloader-box > div:nth-child(8) {
+	background: #3366FF;
+	-webkit-animation: movement 600ms ease 525ms infinite alternate;
+}
+
+@-webkit-keyframes movement {
+	from {
+		-webkit-transform: scale(1.0) translateY(0px) rotateX(0deg);
+		box-shadow: 0 0 0 rgba(0,0,0,0);
+	}
+	to {
+		-webkit-transform: scale(1.5) translateY(-25px) rotateX(45deg);
+		box-shadow: 0 25px 40px rgba(0,0,0,0.4);
+		background: #3399FF;
+	}
+}
+
+button {
+	position:relative;
+	padding: 10px 20px;
+	border: none;
+	background: none;
 	cursor: pointer;
+	z-index: 1;
+
+	font-family: "Source Code Pro";
+	font-weight: 900;
+	text-transform: uppercase;
+	font-size: 30px;
+	color: var(--text-color);
+
+	background-color: var(--btn-color);
+	box-shadow: var(--shadow-color) 2px 2px 22px;
+	border-radius: 4px;
+	z-index: 0;
+	overflow: hidden;
+	top: 50%;
+	left: 44%;
 }
 
-#overlay > div > p {
-	color: #777777;
-	font-size: 12px;
+button:focus {
+	outline-color: transparent;
+	box-shadow: var(--btn-color) 2px 2px 22px;
+}
+
+.right::after, button::after {
+	content: var(--content);
+	display: block;
+	position: absolute;
+	white-space: nowrap;
+	padding: 40px 40px;
+	pointer-events:none;
+}
+
+button::after{
+	font-weight: 200;
+	top: -30px;
+	left: -20px;
+}
+
+.right, .left {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	top: 0;
+}
+.right {
+	left: 66%;
+}
+.left {
+	right: 66%;
+}
+.right::after {
+	top: -30px;
+	left: calc(-66% - 20px);
+
+	background-color: var(--bg-color);
+	color:transparent;
+	transition: transform .4s ease-out;
+	transform: translate(0, -90%) rotate(0deg)
+}
+
+button:hover .right::after {
+	transform: translate(0, -47%) rotate(0deg)
+}
+
+button .right:hover::after {
+	transform: translate(0, -50%) rotate(-7deg)
+}
+
+button .left:hover ~ .right::after {
+	transform: translate(0, -50%) rotate(7deg)
+}
+
+/* bubbles */
+button::before {
+	content: '';
+	pointer-events: none;
+	opacity: .6;
+	background:
+			radial-gradient(circle at 20% 35%,  transparent 0,  transparent 2px, var(--text-color) 3px, var(--text-color) 4px, transparent 4px),
+			radial-gradient(circle at 75% 44%, transparent 0,  transparent 2px, var(--text-color) 3px, var(--text-color) 4px, transparent 4px),
+			radial-gradient(circle at 46% 52%, transparent 0, transparent 4px, var(--text-color) 5px, var(--text-color) 6px, transparent 6px);
+
+	width: 100%;
+	height: 300%;
+	top: 0;
+	left: 0;
+	position: absolute;
+	animation: bubbles 5s linear infinite both;
+}
+
+@keyframes bubbles {
+	from {
+		transform: translate();
+	}
+	to {
+		transform: translate(0, -66.666%);
+	}
 }

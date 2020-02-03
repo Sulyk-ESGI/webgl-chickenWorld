@@ -27,19 +27,25 @@ var prevTime = performance.now();
 var velocity = new THREE.Vector3();
 var direction = new THREE.Vector3();
 
+
+document.getElementById( "game" ).style.display = 'none';
+
+
 /////////////////////////////////////////
 // 		Paramètres des contrôles   	   //
 /////////////////////////////////////////
 const gui = new dat.GUI();
 var params = {
     movSpeed: 50,
-
 };
 
 gui.add(params, 'movSpeed').name('Speed').min(0).max(60).step(1);
 
+
+
 init();
 animate();
+
 
 function init() {
 
@@ -63,6 +69,8 @@ function init() {
     // Pré-chargement d'une texture
 
     scene = new THREE.Scene();
+
+
 
 
     //Fog
@@ -298,6 +306,8 @@ function init() {
     renderer.shadowMap.type = THREE.PCFSoftShadowMap; // default THREE.PCFShadowMap
     document.body.appendChild( renderer.domElement );
 
+
+
     //
 
     setStatsModule();
@@ -324,6 +334,8 @@ function init() {
     //
     window.addEventListener( 'resize', onWindowResize, false );
 }
+
+
 
 function render() {
 
