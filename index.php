@@ -54,15 +54,10 @@
                 document.getElementById( "preloader-id" ).style.display = 'none';
             }
 
-
-
-
             function myFunction(){
                 document.getElementById( "main-loader" ).style.display = 'none';
             }
         </script>
-
-
 
     </body>
 </html>

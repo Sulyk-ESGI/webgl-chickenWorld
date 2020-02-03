@@ -23,6 +23,9 @@ var moveLeft = false;
 var moveRight = false;
 var canJump = false;
 
+var geometry = new THREE.BufferGeometry();
+var vertices = [];
+
 var prevTime = performance.now();
 var velocity = new THREE.Vector3();
 var direction = new THREE.Vector3();
@@ -38,11 +41,8 @@ var params = {
 
 gui.add(params, 'movSpeed').name('Speed').min(0).max(60).step(1);
 
-
 init();
 animate();
-
-
 
 function init() {
 
@@ -604,10 +604,8 @@ function loadtree() {
             gltf.scene.traverse( function ( child ) {
 
                 if ( child.isMesh ) {
-
                     child.castShadow = false;
                     child.receiveShadow = true;
-
                 }
 
             } );
@@ -675,7 +673,6 @@ function loadboat() {
             gltf.scenes; // Array<THREE.Scene>
             gltf.cameras; // Array<THREE.Camera>
             gltf.asset; // Object
-
 
             gltf.scene.rotation.y = 4;
             gltf.scene.position.x = 2200;
@@ -819,7 +816,6 @@ function onWindowResize() {
 function animate() {
 
     requestAnimationFrame( animate );
-
 
    rotationX += 10;
 
