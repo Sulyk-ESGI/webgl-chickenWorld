@@ -28,13 +28,6 @@ var velocity = new THREE.Vector3();
 var direction = new THREE.Vector3();
 
 
-document.getElementById( "game" ).style.display = 'none';
-document.getElementById( "playerButton" );
-
-function myFunction(){
-    console.log("salut");
-}
-
 /////////////////////////////////////////
 // 		Paramètres des contrôles   	   //
 /////////////////////////////////////////
@@ -44,9 +37,6 @@ var params = {
 };
 
 gui.add(params, 'movSpeed').name('Speed').min(0).max(60).step(1);
-
-
-
 
 
 init();
@@ -341,8 +331,6 @@ function init() {
     //
     window.addEventListener( 'resize', onWindowResize, false );
 }
-
-
 
 function render() {
 
