@@ -47,7 +47,7 @@
             buttonReady = document.getElementById("playerButton");
             document.getElementById( "playerButton" ).style.display = 'none';
 
-            var x = setTimeout(showButton, 7000);
+            var x = setTimeout(showButton, 9000);
 
             function showButton() {
                 document.getElementById( "playerButton" ).style.display = 'inline';

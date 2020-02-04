@@ -9,6 +9,7 @@ var camera, scene, renderer, controls;
 var stats;
 var container;
 var target;
+var boolRain = true;
 var listener;
 var cloudParticles = [];
 var objects = [];
@@ -33,20 +34,34 @@ var velocity = new THREE.Vector3();
 var direction = new THREE.Vector3();
 
 
+
 /////////////////////////////////////////
 // 		Paramètres des contrôles   	   //
 /////////////////////////////////////////
 const gui = new dat.GUI();
+var environnementFolder = gui.addFolder( 'Environnement' );
 var params = {
-    movSpeed: 50,
+    movSpeed: 50
 };
 
-gui.add(params, 'movSpeed').name('Speed').min(0).max(60).step(1);
+var controller = new function() {
+    this.rain = true
+}();
+
+
+environnementFolder.add(params, 'movSpeed').name('Speed').min(0).max(60).step(1);
+
+environnementFolder.add( controller, 'rain', false ).onChange( function() {
+
+});
+
+environnementFolder.open();
+
 
 init();
 animate();
 
-function init() {
+function init(){
 
     // Création d'une div dans le dom, et ajout du container
     container = document.createElement('div');
@@ -64,13 +79,11 @@ function init() {
     listener = new THREE.AudioListener();
     camera.add( listener );
 
+
     //Creation de la scene
     // Pré-chargement d'une texture
 
     scene = new THREE.Scene();
-
-
-
 
     //Fog
     scene.fog = new THREE.Fog( 0x00001a, 0, 24500 );
@@ -110,7 +123,7 @@ function init() {
 
     //Light test + helper
 
-    var ambient = new THREE.AmbientLight( 0xFFEFB1, 1.5 );
+    var ambient = new THREE.AmbientLight( 0xFFEFB1, 0.4 );
     scene.add( ambient );
 
     //House light
@@ -234,7 +247,6 @@ function init() {
     var onKeyDown = function ( event ) {
 
         switch ( event.keyCode ) {
-
             case 38: // up
             case 87: // w
                 moveForward = true;
@@ -259,15 +271,11 @@ function init() {
                 if ( canJump === true ) velocity.y += 450;
                 canJump = false;
                 break;
-
         }
-
     };
 
     var onKeyUp = function ( event ) {
-
         switch ( event.keyCode ) {
-
             case 38: // up
             case 87: // w
                 moveForward = false;
@@ -287,9 +295,7 @@ function init() {
             case 68: // d
                 moveRight = false;
                 break;
-
         }
-
     };
 
     document.addEventListener( 'keydown', onKeyDown, false );
@@ -304,8 +310,6 @@ function init() {
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = THREE.PCFSoftShadowMap; // default THREE.PCFShadowMap
     document.body.appendChild( renderer.domElement );
-
-
 
     //
 
@@ -328,7 +332,6 @@ function init() {
     loadFlower(100,-57,100,0);
     loadFlower(100,-57,100,0);
 
-
     rains();
 
     loadOldMan();
@@ -336,6 +339,57 @@ function init() {
     //
     window.addEventListener( 'resize', onWindowResize, false );
 }
+
+/////////
+
+/*
+ *  LOAD SOUND AND PARAMETERS SOUND CONTROLS
+ */
+
+// Load sound of CHICKEN
+var sound0 = new THREE.PositionalAudio( listener );
+
+// load a sound and set it as the PositionalAudio object's buffer
+var audioLoader = new THREE.AudioLoader();
+audioLoader.load( './src/sound/poulSound.ogg', function( buffer ) {
+    sound0.setBuffer( buffer );
+    sound0.setLoop( true );
+    sound0.setRefDistance( 20 );
+    sound0.play();
+});
+
+//Sea sound on boat
+var sound1 = new THREE.PositionalAudio( listener );
+
+// load a sound and set it as the PositionalAudio object's buffer
+audioLoader.load( './src/sound/seaSound.ogg', function( buffer ) {
+    sound1.setBuffer( buffer );
+    sound1.setRefDistance( 50 );
+    sound1.play();
+});
+
+// Set volume in function of UI parameters
+var SoundControls = function () {
+    this.chicken = sound0.getVolume();
+    this.sea = sound1.getVolume();
+};
+
+var soundControls = new SoundControls();
+var volumeFolder = gui.addFolder( 'sound volume' );
+
+
+// Set parameters of control UI
+volumeFolder.add( soundControls, 'chicken' ).min( 0.0 ).max( 5.0 ).step( 0.05 ).onChange( function () {
+    sound0.setVolume( soundControls.chicken );
+} );
+
+volumeFolder.add( soundControls, 'sea' ).min( 0.0 ).max( 5.0 ).step( 0.05 ).onChange( function () {
+    sound1.setVolume( soundControls.sea );
+} );
+
+volumeFolder.open();
+
+///////////
 
 function render() {
 
@@ -399,14 +453,12 @@ function rains() {
     }
     var rainMaterial = new THREE.PointsMaterial({
         color: 0xaaaaaa,
-        size: 1,
+        size: 5,
         transparent: true
     });
      rain = new THREE.Points(rainGeo,rainMaterial);
     console.log()
     scene.add(rain);
-
-
 
 }
 
@@ -512,18 +564,21 @@ function loadChicken(Px,Py,Pz,Rt) {
             gltf.scene.position.z = Pz;
             gltf.scene.position.y = Py;
 
+            //Chicken sound
 
-            var sound = new THREE.PositionalAudio( listener );
-
-            // load a sound and set it as the PositionalAudio object's buffer
-            var audioLoader = new THREE.AudioLoader();
-            audioLoader.load( './src/sound/poulSound.ogg', function( buffer ) {
-                sound.setBuffer( buffer );
-                sound.setRefDistance( 20 );
-                sound.play();
-
-                gltf.scene.add( sound );
-            });
+            // sound = new THREE.PositionalAudio( listener );
+            //
+            // // load a sound and set it as the PositionalAudio object's buffer
+            // var audioLoader = new THREE.AudioLoader();
+            // audioLoader.load( './src/sound/poulSound.ogg', function( buffer ) {
+            //     sound.setBuffer( buffer );
+            //     sound.setLoop( true );
+            //     sound.setRefDistance( 20 );
+            //     sound.setVolume( 1 );
+            //     sound.play();
+            //
+                 gltf.scene.add( sound );
+            // });
         },
 
         // Fonction appelée lors du chargement
@@ -749,17 +804,7 @@ function loadboat() {
             gltf.scene.position.z = 1500;
             gltf.scene.position.y = -500;
 
-            //audio
-            var sound1 = new THREE.PositionalAudio( listener );
 
-            // load a sound and set it as the PositionalAudio object's buffer
-            var audioLoader = new THREE.AudioLoader();
-            audioLoader.load( './src/sound/seaSound.ogg', function( buffer ) {
-                sound1.setBuffer( buffer );
-                sound1.setRefDistance( 50 );
-                sound1.play();
-
-            });
             gltf.scene.add( sound1 );
         },
 
@@ -885,7 +930,6 @@ function onWindowResize() {
 
 function animate() {
 
-
     requestAnimationFrame( animate );
 
     cloudParticles.forEach(p => {
@@ -894,10 +938,11 @@ function animate() {
     rainGeo.vertices.forEach(p => {
         p.velocity -= 0.2 + Math.random() * 0.1;
         p.y += p.velocity;
-        if (p.y < -4000) {
-            p.y = 4000;
+        if (p.y < -3000) {
+            p.y = 3000;
             p.velocity = 0;
         }
+
     });
     rainGeo.verticesNeedUpdate = true;
 
@@ -907,6 +952,7 @@ function animate() {
        rotationX = -6000;
    }
     var delta = clock.getDelta();
+
     if ( mixer ) mixer.update( delta );
 
     if ( controls.isLocked === true ) {
@@ -957,11 +1003,19 @@ function animate() {
 
     }
 
-
     targetObject.position.set(rotationX,100,0);
-
 
     stats.update();
     renderer.render( scene, camera );
 
 }
+
+/*
+    Sound control x GUI control
+ */
+
+
+
+//sound.setVolume( params.volumeChiken );
+
+
