@@ -3,8 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="25e9a4cb-9250-4bca-b234-c1a34503992f" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/main.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/js/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/js/main.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -105,6 +103,7 @@
       <workItem from="1580419059129" duration="3814000" />
       <workItem from="1580674610520" duration="8397000" />
       <workItem from="1580734012568" duration="12369000" />
+      <workItem from="1580806180454" duration="837000" />
     </task>
     <servers />
   </component>
@@ -125,11 +124,11 @@
     </state>
     <state width="889" height="528" key="SwitcherDM/0.0.2560.1040/2560.0.1920.1040@0.0.2560.1040" timestamp="1580156349787" />
     <state width="500" height="445" key="SwitcherDM/0.23.1440.877@0.23.1440.877" timestamp="1580041765294" />
-    <state x="3275" y="352" key="com.intellij.ide.util.TipDialog" timestamp="1580735252100">
-      <screen x="2560" y="0" width="1920" height="1040" />
+    <state x="364" y="23" key="com.intellij.ide.util.TipDialog" timestamp="1580806216673">
+      <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state x="3275" y="352" key="com.intellij.ide.util.TipDialog/0.0.2560.1040/2560.0.1920.1040@0.0.2560.1040" timestamp="1580735252100" />
-    <state x="364" y="-731" key="com.intellij.ide.util.TipDialog/0.23.1440.877/-245.-1057.1920.1057@-245.-1057.1920.1057" timestamp="1580290394695" />
+    <state x="364" y="23" key="com.intellij.ide.util.TipDialog/0.23.1440.877/-245.-1057.1920.1057@-245.-1057.1920.1057" timestamp="1580806216673" />
     <state x="457" y="294" key="com.intellij.ide.util.TipDialog/0.23.1440.877/-245.-1057.1920.1057@0.23.1440.877" timestamp="1579700741128" />
     <state x="457" y="294" key="com.intellij.ide.util.TipDialog/0.23.1440.877@0.23.1440.877" timestamp="1580317697272" />
     <state x="503" y="385" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1580041766269">
@@ -171,7 +170,6 @@
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/js/main.js</url>
           <line>267</line>
-          <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="23" />
         </line-breakpoint>
       </breakpoints>

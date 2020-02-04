@@ -110,7 +110,7 @@ function init() {
 
     //Light test + helper
 
-    var ambient = new THREE.AmbientLight( 0xFFEFB1, 0.3 );
+    var ambient = new THREE.AmbientLight( 0xFFEFB1, 1.5 );
     scene.add( ambient );
 
     //House light
@@ -910,8 +910,6 @@ function animate() {
     if ( mixer ) mixer.update( delta );
 
     if ( controls.isLocked === true ) {
-
-
 
         raycaster.ray.origin.copy( controls.getObject().position );
 
