@@ -4,7 +4,6 @@
     <list default="true" id="25e9a4cb-9250-4bca-b234-c1a34503992f" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/main.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/js/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/js/main.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -105,7 +104,7 @@
       <workItem from="1580419059129" duration="3814000" />
       <workItem from="1580674610520" duration="8397000" />
       <workItem from="1580734012568" duration="12369000" />
-      <workItem from="1580806180454" duration="12983000" />
+      <workItem from="1580806180454" duration="19669000" />
     </task>
     <servers />
   </component>
@@ -160,12 +159,12 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/js/main.js</url>
-          <line>246</line>
+          <line>251</line>
           <option name="timeStamp" value="8" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/js/main.js</url>
-          <line>634</line>
+          <line>736</line>
           <option name="timeStamp" value="13" />
         </line-breakpoint>
       </breakpoints>

@@ -8,6 +8,7 @@ var rainGeo,flash, rain,rainDrop, rainCount = 15000;
 var camera, scene, renderer, controls;
 var stats;
 var container;
+var gun;
 var target;
 var boolRain = true;
 var listener;
@@ -74,6 +75,8 @@ function init(){
     camera.rotation.y= 4;
     camera.rotation.x = 0;
     camera.rotation.z = 0;
+
+
 
     //Audio listener
     listener = new THREE.AudioListener();
@@ -217,6 +220,8 @@ function init(){
 
     //
 
+    //A
+
     controls = new PointerLockControls( camera, document.body );
 
     var blocker = document.getElementById( 'blocker' );
@@ -317,24 +322,51 @@ function init(){
     render();
     grounds();
     loadIle();
-    loadHouse();
-    loadtree();
-    loadboat();
-    loadLightHouse();
-    loadChickenCoop(800,-65,1200,3);
-    loadChickenCoop(800,-65,1000,4);
-    loadChickenCoop(600,-65,800,2.3);
-    loadChicken(600,-58,800,0);
+    // loadHouse();
+    // loadtree();
+    // loadboat();
+    // loadLightHouse();
+    // loadChickenCoop(800,-65,1200,3);
+    // loadChickenCoop(800,-65,1000,4);
+    // loadChickenCoop(600,-65,800,2.3);
+    // loadChicken(600,-58,800,0);
 
-    loadFlower(400,-57,-100,0);
-    loadFlower(-600,-57,300,0);
-    loadFlower(1200,-57,450,0);
-    loadFlower(100,-57,100,0);
-    loadFlower(100,-57,100,0);
+
+    // loadFlower(400,-57,-100,0);
+    // loadFlower(-600,-57,300,0);
+    // loadFlower(1200,-57,450,0);
+    // loadFlower(100,-57,100,0);
+    // loadFlower(100,-57,100,0);
 
     rains();
 
     loadOldMan();
+
+    loadGun(camera.position.x + 15,camera.position.y + 5,camera.position.z + 5,camera.rotation.y + 1.5);
+
+
+    var axesHelper = new THREE.AxesHelper( 5000 );
+    scene.add( axesHelper );
+
+
+    poto(350,1,1200);
+    poto(250,1,1000);
+    // poto(-200,1,800);
+    // poto(-600,1,300);
+    // poto(-400,1,-300);
+    // poto(150,1,-900);
+    // poto(300,1,-1800);
+    // poto(800,1,-2000);
+    // poto(1700,1,-1500);
+    // poto(2000,1,-1000);
+    // poto(2100,1,-500);
+    // //mid
+    // poto(2300,1,0);
+    // poto(2000,1,500);
+    // poto(1500,1,1000);
+    // poto(1300,1,1500);
+    // poto(600,1,2000);
+    // poto(300,1,1800);
 
     //
     window.addEventListener( 'resize', onWindowResize, false );
@@ -390,6 +422,16 @@ volumeFolder.add( soundControls, 'sea' ).min( 0.0 ).max( 5.0 ).step( 0.05 ).onCh
 volumeFolder.open();
 
 ///////////
+
+function poto(Px,Py,Pz) {
+
+    var geometry = new THREE.BoxBufferGeometry( 10, 100, 10 );
+    var material = new THREE.MeshBasicMaterial( {color: 0x00ff00} );
+    var cube = new THREE.Mesh( geometry, material );
+
+    cube.position.set(Px,Py,Pz);
+    scene.add( cube );
+}
 
 function render() {
 
@@ -594,6 +636,66 @@ function loadChicken(Px,Py,Pz,Rt) {
     );
 
 }
+
+function loadGun(Px,Py,Pz,Rt) {
+    gun = new GLTFLoader();
+    gun.load(
+        // Chemin de la ressource
+        './src/objects/gun/scene.gltf',
+        // called when the resource is loaded
+        function (gltf) {
+            gltf.scene.traverse( function ( child ) {
+                if ( child.isMesh ) {
+                    child.castShadow = true;
+                    child.receiveShadow = false;
+                }
+
+            } );
+            scene.add(gltf.scene);
+
+            gltf.animations; // Array<THREE.AnimationClip>
+            gltf.scene; // THREE.Scene
+            gltf.scene.scale.set(1,1,1); // THREE.Scene
+            gltf.scenes; // Array<THREE.Scene>
+            gltf.cameras; // Array<THREE.Camera>
+            gltf.asset; // Object
+
+            gltf.scene.rotation.y = Rt;
+            gltf.scene.position.x = Px;
+            gltf.scene.position.z = Pz;
+            gltf.scene.position.y = Py;
+
+            //Chicken sound
+
+            // sound = new THREE.PositionalAudio( listener );
+            //
+            // // load a sound and set it as the PositionalAudio object's buffer
+            // var audioLoader = new THREE.AudioLoader();
+            // audioLoader.load( './src/sound/poulSound.ogg', function( buffer ) {
+            //     sound.setBuffer( buffer );
+            //     sound.setLoop( true );
+            //     sound.setRefDistance( 20 );
+            //     sound.setVolume( 1 );
+            //     sound.play();
+            //
+            gltf.scene.add( sound );
+            // });
+        },
+
+        // Fonction appelée lors du chargement
+        function (xhr) {
+            console.log((xhr.loaded / xhr.total * 100) + '% loaded Chicken');
+        },
+
+        // Fonction appelée lors d'une quelconque erreur
+        function (error) {
+            console.log('Une erreur est survenue');
+            console.log(error)
+        }
+    );
+
+}
+
 
 function loadChickenCoop(Px,Py,Pz,Rt) {
     var loader = new GLTFLoader();
@@ -930,6 +1032,8 @@ function onWindowResize() {
 
 function animate() {
 
+    loadGun().position.set(camera.position.x,camera.position.y,camera.position.z);
+
     requestAnimationFrame( animate );
 
     cloudParticles.forEach(p => {
@@ -1009,13 +1113,5 @@ function animate() {
     renderer.render( scene, camera );
 
 }
-
-/*
-    Sound control x GUI control
- */
-
-
-
-//sound.setVolume( params.volumeChiken );
 
 
