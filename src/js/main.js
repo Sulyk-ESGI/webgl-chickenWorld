@@ -10,6 +10,7 @@ var stats;
 var container;
 var gun;
 var target;
+var refreshGun;
 var boolRain = true;
 var listener;
 var cloudParticles = [];
@@ -370,6 +371,8 @@ function init(){
 
     //
     window.addEventListener( 'resize', onWindowResize, false );
+
+
 }
 
 /////////
@@ -638,6 +641,7 @@ function loadChicken(Px,Py,Pz,Rt) {
 }
 
 function loadGun(Px,Py,Pz,Rt) {
+    refreshGun = gltf;
     gun = new GLTFLoader();
     gun.load(
         // Chemin de la ressource
@@ -649,51 +653,32 @@ function loadGun(Px,Py,Pz,Rt) {
                     child.castShadow = true;
                     child.receiveShadow = false;
                 }
-
             } );
             scene.add(gltf.scene);
-
             gltf.animations; // Array<THREE.AnimationClip>
             gltf.scene; // THREE.Scene
             gltf.scene.scale.set(1,1,1); // THREE.Scene
             gltf.scenes; // Array<THREE.Scene>
             gltf.cameras; // Array<THREE.Camera>
             gltf.asset; // Object
-
             gltf.scene.rotation.y = Rt;
             gltf.scene.position.x = Px;
             gltf.scene.position.z = Pz;
             gltf.scene.position.y = Py;
-
-            //Chicken sound
-
-            // sound = new THREE.PositionalAudio( listener );
-            //
-            // // load a sound and set it as the PositionalAudio object's buffer
-            // var audioLoader = new THREE.AudioLoader();
-            // audioLoader.load( './src/sound/poulSound.ogg', function( buffer ) {
-            //     sound.setBuffer( buffer );
-            //     sound.setLoop( true );
-            //     sound.setRefDistance( 20 );
-            //     sound.setVolume( 1 );
-            //     sound.play();
-            //
             gltf.scene.add( sound );
-            // });
-        },
+            return gltf;
 
+        },
         // Fonction appelée lors du chargement
         function (xhr) {
             console.log((xhr.loaded / xhr.total * 100) + '% loaded Chicken');
         },
-
         // Fonction appelée lors d'une quelconque erreur
         function (error) {
             console.log('Une erreur est survenue');
             console.log(error)
         }
     );
-
 }
 
 
@@ -1032,7 +1017,7 @@ function onWindowResize() {
 
 function animate() {
 
-    loadGun().position.set(camera.position.x,camera.position.y,camera.position.z);
+    //refreshGun.scene.position.set(camera.position.x , camera.position.y, camera.position.z);
 
     requestAnimationFrame( animate );
 
@@ -1113,5 +1098,9 @@ function animate() {
     renderer.render( scene, camera );
 
 }
+
+console.log(refreshGun);
+
+
 
 

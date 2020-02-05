@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="25e9a4cb-9250-4bca-b234-c1a34503992f" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/index.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/js/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/js/main.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -104,7 +103,7 @@
       <workItem from="1580419059129" duration="3814000" />
       <workItem from="1580674610520" duration="8397000" />
       <workItem from="1580734012568" duration="12369000" />
-      <workItem from="1580806180454" duration="19669000" />
+      <workItem from="1580806180454" duration="21556000" />
     </task>
     <servers />
   </component>
@@ -140,9 +139,10 @@
       <screen x="-245" y="-1057" width="1920" height="1057" />
     </state>
     <state x="599" y="-1055" width="1076" height="1055" key="dock-window-1/0.23.1440.877/-245.-1057.1920.1057@-245.-1057.1920.1057" timestamp="1580810295671" />
-    <state x="301" y="49" width="837" height="825" key="find.popup" timestamp="1580322152125">
-      <screen x="0" y="23" width="1440" height="877" />
+    <state x="156" y="-1026" width="1116" height="995" key="find.popup" timestamp="1580913152451">
+      <screen x="-245" y="-1057" width="1920" height="1057" />
     </state>
+    <state x="156" y="-1026" width="1116" height="995" key="find.popup/0.23.1440.877/-245.-1057.1920.1057@-245.-1057.1920.1057" timestamp="1580913152451" />
     <state x="301" y="49" width="837" height="825" key="find.popup/0.23.1440.877@0.23.1440.877" timestamp="1580322152125" />
     <state x="894" y="243" key="run.anything.popup" timestamp="1580335955941">
       <screen x="0" y="0" width="2560" height="1040" />
@@ -159,12 +159,12 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/js/main.js</url>
-          <line>251</line>
+          <line>252</line>
           <option name="timeStamp" value="8" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/js/main.js</url>
-          <line>736</line>
+          <line>721</line>
           <option name="timeStamp" value="13" />
         </line-breakpoint>
       </breakpoints>
