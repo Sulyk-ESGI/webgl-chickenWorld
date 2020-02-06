@@ -8,6 +8,7 @@ var rainGeo,flash, rain,rainDrop, rainCount = 15000;
 var camera, scene, renderer, controls;
 var stats;
 var container;
+var rainColor, rainMaterial;
 var gun;
 var target;
 var refreshGun;
@@ -42,20 +43,15 @@ var direction = new THREE.Vector3();
 /////////////////////////////////////////
 const gui = new dat.GUI();
 var environnementFolder = gui.addFolder( 'Environnement' );
+var colorFolder = gui.addFolder('Color');
+
 var params = {
-    movSpeed: 50
+    movSpeed: 50,
+    rainColor: [255, 0, 255]
 };
 
-var controller = new function() {
-    this.rain = true
-}();
-
-
 environnementFolder.add(params, 'movSpeed').name('Speed').min(0).max(60).step(1);
-
-environnementFolder.add( controller, 'rain', false ).onChange( function() {
-
-});
+colorFolder.addColor(params , 'rainColor');
 
 environnementFolder.open();
 
@@ -88,6 +84,11 @@ function init(){
 
     //Fog
     scene.fog = new THREE.Fog( 0x00001a, 0, 24500 );
+
+    //
+
+    let body = document.getElementsByTagName("body")[0];
+    body.addEventListener("click", shooterAkimbo, false);
 
     /*
      * CREATION DE LA SKYBOX
@@ -274,6 +275,7 @@ function init(){
                 if ( canJump === true ) velocity.y += 450;
                 canJump = false;
                 break;
+
         }
     };
 
@@ -400,6 +402,15 @@ audioLoader.load( './src/sound/seaSound.ogg', function( buffer ) {
     sound1.play();
 });
 
+
+
+// load a sound and set it as the PositionalAudio object's buffer
+audioLoader.load( './src/sound/seaSound.ogg', function( buffer ) {
+    sound1.setBuffer( buffer );
+    sound1.setRefDistance( 50 );
+    sound1.play();
+});
+
 // Set volume in function of UI parameters
 var SoundControls = function () {
     this.chicken = sound0.getVolume();
@@ -449,7 +460,7 @@ function getRandomInt(min, max) {
 
 function cloud() {
 
-    function getRandomInt(min, max) {
+function getRandomInt(min, max) {
         var min = Math.ceil(min);
         var max = Math.floor(max);
         return Math.floor(Math.random() * (max - min)) + min;
@@ -493,11 +504,13 @@ function rains() {
         rainDrop.velocity = 0;
         rainGeo.vertices.push(rainDrop);
     }
-    var rainMaterial = new THREE.PointsMaterial({
+     rainMaterial = new THREE.PointsMaterial({
         color: 0xaaaaaa,
         size: 5,
         transparent: true
     });
+
+
     rain = new THREE.Points(rainGeo,rainMaterial);
     console.log()
     scene.add(rain);
@@ -648,7 +661,6 @@ function loadGun(Px,Py,Pz,Ry) {
             gltf.asset; // Object
 
             gltf.scene.rotation.y = Ry;
-
 
             camera.add(gltf.scene);
             //gltf.scene.position.set(7,-5,-15);
@@ -999,8 +1011,22 @@ function onWindowResize() {
 
 }
 
-function animate() {
+function shooterAkimbo() {
 
+    var soundGun = new THREE.Audio( listener );
+
+// load a sound and set it as the Audio object's buffer
+    var audioLoader = new THREE.AudioLoader();
+    audioLoader.load( './src/sound/shooter.ogg', function( buffer ) {
+        soundGun.setBuffer( buffer );
+        
+        soundGun.setVolume( 1 );
+        soundGun.play();
+    });
+
+}
+
+function animate() {
 
     requestAnimationFrame( animate );
 
