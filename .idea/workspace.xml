@@ -93,7 +93,7 @@
       <workItem from="1580419059129" duration="3814000" />
       <workItem from="1580674610520" duration="8397000" />
       <workItem from="1580734012568" duration="12369000" />
-      <workItem from="1580806180454" duration="22056000" />
+      <workItem from="1580806180454" duration="24535000" />
     </task>
     <servers />
   </component>
@@ -149,12 +149,16 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/js/main.js</url>
-          <line>252</line>
+          <line>249</line>
           <option name="timeStamp" value="8" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/js/main.js</url>
+<<<<<<< Updated upstream
           <line>718</line>
+=======
+          <line>725</line>
+>>>>>>> Stashed changes
           <option name="timeStamp" value="13" />
         </line-breakpoint>
       </breakpoints>

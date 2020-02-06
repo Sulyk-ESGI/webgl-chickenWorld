@@ -77,12 +77,9 @@ function init(){
     camera.rotation.x = 0;
     camera.rotation.z = 0;
 
-
-
     //Audio listener
     listener = new THREE.AudioListener();
     camera.add( listener );
-
 
     //Creation de la scene
     // Pré-chargement d'une texture
@@ -344,6 +341,7 @@ function init(){
     loadOldMan();
 
     loadGun(-12, -5, -15, 1.7);
+    loadGun(12, -5, -15, 1.4);
 
     scene.add(camera);
     var axesHelper = new THREE.AxesHelper( 5000 );
@@ -371,7 +369,6 @@ function init(){
 
     //
     window.addEventListener( 'resize', onWindowResize, false );
-
 
 }
 
@@ -609,19 +606,6 @@ function loadChicken(Px,Py,Pz,Rt) {
             gltf.scene.position.z = Pz;
             gltf.scene.position.y = Py;
 
-            //Chicken sound
-
-            // sound = new THREE.PositionalAudio( listener );
-            //
-            // // load a sound and set it as the PositionalAudio object's buffer
-            // var audioLoader = new THREE.AudioLoader();
-            // audioLoader.load( './src/sound/poulSound.ogg', function( buffer ) {
-            //     sound.setBuffer( buffer );
-            //     sound.setLoop( true );
-            //     sound.setRefDistance( 20 );
-            //     sound.setVolume( 1 );
-            //     sound.play();
-            //
             gltf.scene.add( sound );
             // });
         },
@@ -654,13 +638,17 @@ function loadGun(Px,Py,Pz,Ry) {
                 }
             } );
 
+            camera.add (gltf.scene);
+
             gltf.animations; // Array<THREE.AnimationClip>
             gltf.scene; // THREE.Scene
             gltf.scene.scale.set(1,1,1); // THREE.Scene
             gltf.scenes; // Array<THREE.Scene>
             gltf.cameras; // Array<THREE.Camera>
             gltf.asset; // Object
+
             gltf.scene.rotation.y = Ry;
+
 
             camera.add(gltf.scene);
             //gltf.scene.position.set(7,-5,-15);
@@ -677,7 +665,6 @@ function loadGun(Px,Py,Pz,Ry) {
         }
     );
 }
-
 
 function loadChickenCoop(Px,Py,Pz,Rt) {
     var loader = new GLTFLoader();
@@ -1093,4 +1080,12 @@ function animate() {
     stats.update();
     renderer.render( scene, camera );
 
+
 }
+
+
+
+
+
+
+
