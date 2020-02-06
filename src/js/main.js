@@ -125,7 +125,7 @@ function init(){
      * Propriétés des ombres (width / height)
      */
 
-    //Light test + helper
+        //Light test + helper
 
     var ambient = new THREE.AmbientLight( 0xFFEFB1, 0.4 );
     scene.add( ambient );
@@ -343,9 +343,9 @@ function init(){
 
     loadOldMan();
 
-    loadGun(camera.position.x + 15,camera.position.y + 5,camera.position.z + 5,camera.rotation.y + 1.5);
+    loadGun(-12, -5, -15, 1.7);
 
-
+    scene.add(camera);
     var axesHelper = new THREE.AxesHelper( 5000 );
     scene.add( axesHelper );
 
@@ -410,7 +410,7 @@ var SoundControls = function () {
 };
 
 var soundControls = new SoundControls();
-var volumeFolder = gui.addFolder( 'sound volume' );
+var volumeFolder = gui.addFolder( 'Sounds' );
 
 
 // Set parameters of control UI
@@ -453,7 +453,7 @@ function getRandomInt(min, max) {
 function cloud() {
 
     function getRandomInt(min, max) {
-       var min = Math.ceil(min);
+        var min = Math.ceil(min);
         var max = Math.floor(max);
         return Math.floor(Math.random() * (max - min)) + min;
     }
@@ -501,7 +501,7 @@ function rains() {
         size: 5,
         transparent: true
     });
-     rain = new THREE.Points(rainGeo,rainMaterial);
+    rain = new THREE.Points(rainGeo,rainMaterial);
     console.log()
     scene.add(rain);
 
@@ -513,26 +513,26 @@ function loadOldMan(){
     loader.load( './src/objects/oldMan/SittingOldMan.fbx',
         function ( object ) {
 
-        mixer = new THREE.AnimationMixer( object );
+            mixer = new THREE.AnimationMixer( object );
 
-        var action = mixer.clipAction( object.animations[ 0 ] );
-        action.play();
+            var action = mixer.clipAction( object.animations[ 0 ] );
+            action.play();
 
-        object.traverse( function ( child ) {
+            object.traverse( function ( child ) {
 
-            if ( child.isMesh ) {
-                child.castShadow = true;
-                child.receiveShadow = true;
-            }
+                if ( child.isMesh ) {
+                    child.castShadow = true;
+                    child.receiveShadow = true;
+                }
 
-        } );
+            } );
             scene.add( object );
             object.scale.set(1.2,1.2,1.2); // THREE.Scene
             object.rotation.y = 4;
             object.position.x = 2000;
             object.position.z = 930;
             object.position.y = 145;
-    } );
+        } );
 }
 
 function loadIle() {
@@ -562,9 +562,9 @@ function loadIle() {
             gltf.asset; // Object
 
             gltf.scene.rotation.y = -300;
-             gltf.scene.position.x = -200;
-             gltf.scene.position.z = -10;
-             gltf.scene.position.y = -830;
+            gltf.scene.position.x = -200;
+            gltf.scene.position.z = -10;
+            gltf.scene.position.y = -830;
         },
 
         // Fonction appelée lors du chargement
@@ -622,7 +622,7 @@ function loadChicken(Px,Py,Pz,Rt) {
             //     sound.setVolume( 1 );
             //     sound.play();
             //
-                 gltf.scene.add( sound );
+            gltf.scene.add( sound );
             // });
         },
 
@@ -640,7 +640,7 @@ function loadChicken(Px,Py,Pz,Rt) {
 
 }
 
-function loadGun(Px,Py,Pz,Rt) {
+function loadGun(Px,Py,Pz,Ry) {
     gun = new GLTFLoader();
     gun.load(
         // Chemin de la ressource
@@ -653,23 +653,22 @@ function loadGun(Px,Py,Pz,Rt) {
                     child.receiveShadow = false;
                 }
             } );
-            scene.add(gltf.scene);
+
             gltf.animations; // Array<THREE.AnimationClip>
             gltf.scene; // THREE.Scene
             gltf.scene.scale.set(1,1,1); // THREE.Scene
             gltf.scenes; // Array<THREE.Scene>
             gltf.cameras; // Array<THREE.Camera>
             gltf.asset; // Object
-            gltf.scene.rotation.y = Rt;
-            gltf.scene.position.x = Px;
-            gltf.scene.position.z = Pz;
-            gltf.scene.position.y = Py;
-            gltf.scene.add( sound );
+            gltf.scene.rotation.y = Ry;
 
+            camera.add(gltf.scene);
+            //gltf.scene.position.set(7,-5,-15);
+            gltf.scene.position.set(Px, Py, Pz);
         },
         // Fonction appelée lors du chargement
         function (xhr) {
-            console.log((xhr.loaded / xhr.total * 100) + '% loaded Chicken');
+            console.log((xhr.loaded / xhr.total * 100) + '% loaded gun');
         },
         // Fonction appelée lors d'une quelconque erreur
         function (error) {
@@ -1015,7 +1014,7 @@ function onWindowResize() {
 
 function animate() {
 
-    
+
     requestAnimationFrame( animate );
 
     cloudParticles.forEach(p => {
@@ -1032,11 +1031,11 @@ function animate() {
     });
     rainGeo.verticesNeedUpdate = true;
 
-   rotationX += 10;
+    rotationX += 10;
 
-   if (rotationX > 6000){
-       rotationX = -6000;
-   }
+    if (rotationX > 6000){
+        rotationX = -6000;
+    }
     var delta = clock.getDelta();
 
     if ( mixer ) mixer.update( delta );
@@ -1095,9 +1094,3 @@ function animate() {
     renderer.render( scene, camera );
 
 }
-
-console.log(refreshGun);
-
-
-
-
