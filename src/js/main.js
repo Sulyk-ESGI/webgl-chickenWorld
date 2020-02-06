@@ -641,7 +641,6 @@ function loadChicken(Px,Py,Pz,Rt) {
 }
 
 function loadGun(Px,Py,Pz,Rt) {
-    refreshGun = gltf;
     gun = new GLTFLoader();
     gun.load(
         // Chemin de la ressource
@@ -666,7 +665,6 @@ function loadGun(Px,Py,Pz,Rt) {
             gltf.scene.position.z = Pz;
             gltf.scene.position.y = Py;
             gltf.scene.add( sound );
-            return gltf;
 
         },
         // Fonction appelée lors du chargement
@@ -1017,8 +1015,7 @@ function onWindowResize() {
 
 function animate() {
 
-    //refreshGun.scene.position.set(camera.position.x , camera.position.y, camera.position.z);
-
+    
     requestAnimationFrame( animate );
 
     cloudParticles.forEach(p => {
