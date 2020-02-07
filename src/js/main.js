@@ -330,8 +330,8 @@ function init(){
     // loadChickenCoop(800,-65,1000,4);
     // loadChickenCoop(600,-65,800,2.3);
     // loadChicken(600,-58,800,0);
-
-
+    //
+    //
     // loadFlower(400,-57,-100,0);
     // loadFlower(-600,-57,300,0);
     // loadFlower(1200,-57,450,0);
@@ -340,7 +340,7 @@ function init(){
 
     rains();
 
-    loadOldMan();
+    //loadOldMan();
 
     loadGun(-12, -5, -15, 1.7);
     loadGun(12, -5, -15, 1.4);
@@ -368,6 +368,7 @@ function init(){
     // poto(1300,1,1500);
     // poto(600,1,2000);
     // poto(300,1,1800);
+
 
     //
     window.addEventListener( 'resize', onWindowResize, false );
@@ -457,39 +458,6 @@ function getRandomInt(min, max) {
     var max = Math.floor(max);
     return Math.floor(Math.random() * (max - min)) + min;
 }
-
-function cloud() {
-
-function getRandomInt(min, max) {
-        var min = Math.ceil(min);
-        var max = Math.floor(max);
-        return Math.floor(Math.random() * (max - min)) + min;
-    }
-
-    let loader = new THREE.TextureLoader();
-    loader.load("./src/textures/cloud.png", function(texture){
-        var cloudGeo = new THREE.PlaneBufferGeometry(5000,5000);
-        var cloudMaterial = new THREE.MeshLambertMaterial({
-            map: texture,
-            transparent: true
-        });
-        for(let p=0; p<250; p++) {
-            let cloud = new THREE.Mesh(cloudGeo,cloudMaterial);
-            cloud.position.set(
-                getRandomInt(-200,2000),
-                5000,
-                getRandomInt(-200,2000)
-            );
-            cloud.rotation.x = 1.16;
-            cloud.rotation.y = -0.12;
-            cloud.rotation.z = Math.random()*360;
-            cloud.material.opacity = 0.8;
-            scene.add(cloud);
-
-        }
-
-    });
-};
 
 function rains() {
 
@@ -1018,8 +986,8 @@ function shooterAkimbo() {
 // load a sound and set it as the Audio object's buffer
     var audioLoader = new THREE.AudioLoader();
     audioLoader.load( './src/sound/shooter.ogg', function( buffer ) {
+
         soundGun.setBuffer( buffer );
-        
         soundGun.setVolume( 1 );
         soundGun.play();
     });
