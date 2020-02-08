@@ -87,6 +87,7 @@ function init(){
 
     //
 
+    //shooter akimbo
     let body = document.getElementsByTagName("body")[0];
     body.addEventListener("click", shooterAkimbo, false);
 
@@ -393,6 +394,19 @@ audioLoader.load( './src/sound/poulSound.ogg', function( buffer ) {
     sound0.play();
 });
 
+
+// Global audio RAIN
+var sound3 = new THREE.Audio( listener );
+
+// load a sound and set it as the Audio object's buffer
+var audioLoader = new THREE.AudioLoader();
+audioLoader.load( './src/sound/rainSound.ogg', function( buffer ) {
+    sound3.setBuffer( buffer );
+    sound3.setLoop( true );
+    sound3.setVolume( 1.5 );
+    sound3.play();
+});
+
 //Sea sound on boat
 var sound1 = new THREE.PositionalAudio( listener );
 
@@ -405,17 +419,12 @@ audioLoader.load( './src/sound/seaSound.ogg', function( buffer ) {
 
 
 
-// load a sound and set it as the PositionalAudio object's buffer
-audioLoader.load( './src/sound/seaSound.ogg', function( buffer ) {
-    sound1.setBuffer( buffer );
-    sound1.setRefDistance( 50 );
-    sound1.play();
-});
-
 // Set volume in function of UI parameters
 var SoundControls = function () {
     this.chicken = sound0.getVolume();
     this.sea = sound1.getVolume();
+    this.rain = sound3.getVolume();
+
 };
 
 var soundControls = new SoundControls();
@@ -429,6 +438,10 @@ volumeFolder.add( soundControls, 'chicken' ).min( 0.0 ).max( 5.0 ).step( 0.05 ).
 
 volumeFolder.add( soundControls, 'sea' ).min( 0.0 ).max( 5.0 ).step( 0.05 ).onChange( function () {
     sound1.setVolume( soundControls.sea );
+} );
+
+volumeFolder.add( soundControls, 'rain' ).min( 0.0 ).max( 5.0 ).step( 0.05 ).onChange( function () {
+    sound3.setVolume( soundControls.rain );
 } );
 
 volumeFolder.open();
@@ -979,6 +992,32 @@ function onWindowResize() {
 
 }
 
+function loadCloud(){
+
+    let loader = new THREE.TextureLoader();
+    loader.load("smoke.png", function(texture){
+        cloudGeo = new THREE.PlaneBufferGeometry(500,500);
+        cloudMaterial = new THREE.MeshLambertMaterial({
+            map: texture,
+            transparent: true
+        });
+        for(let p=0; p<25; p++) {
+            let cloud = new THREE.Mesh(cloudGeo,cloudMaterial);
+            cloud.position.set(
+                Math.random()*800 -400,
+                500,
+                Math.random()*500 - 450
+            );
+            cloud.rotation.x = 1.16;
+            cloud.rotation.y = -0.12;
+            cloud.rotation.z = Math.random()*360;
+            cloud.material.opacity = 0.6;
+            scene.add(cloud);
+        }
+    });
+
+}
+
 function shooterAkimbo() {
 
     var soundGun = new THREE.Audio( listener );
@@ -1030,7 +1069,7 @@ function animate() {
         var onObject = intersections.length > 0;
 
         var time = performance.now();
-        var delta = ( time - prevTime + params.movSpeed) / 400 ; //Seed
+        var delta = ( time - prevTime + params.movSpeed) / 400 ; //Speed
 
         velocity.x -= velocity.x * 10.0 * delta ;
         velocity.z -= velocity.z * 10.0 * delta ;
