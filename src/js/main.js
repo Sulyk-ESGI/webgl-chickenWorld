@@ -370,6 +370,7 @@ function init(){
     // poto(600,1,2000);
     // poto(300,1,1800);
 
+    loadVoile();
 
     //
     window.addEventListener( 'resize', onWindowResize, false );
@@ -445,6 +446,10 @@ volumeFolder.add( soundControls, 'rain' ).min( 0.0 ).max( 5.0 ).step( 0.05 ).onC
 } );
 
 volumeFolder.open();
+
+///////////
+
+
 
 ///////////
 
@@ -886,6 +891,52 @@ function loadboat() {
 
 }
 
+function loadVoile() {
+    var loader = new GLTFLoader();
+    loader.load(
+        // Chemin de la ressource
+        './src/objects/tartane/scene.gltf',
+        // called when the resource is loaded
+        function (gltf) {
+            gltf.scene.traverse( function ( child ) {
+
+                if ( child.isMesh ) {
+                    child.castShadow = true;
+                    child.receiveShadow = false;
+                }
+
+            } );
+            scene.add(gltf.scene);
+
+            gltf.animations; // Array<THREE.AnimationClip>
+            gltf.scene.scale.set(15,15,15); // THREE.Scene
+            gltf.scenes; // Array<THREE.Scene>
+            gltf.cameras; // Array<THREE.Camera>
+            gltf.asset; // Object
+
+            gltf.scene.rotation.y = 0;
+            gltf.scene.position.x = 100;
+            gltf.scene.position.z = 100;
+            gltf.scene.position.y = 0;
+
+
+            gltf.scene.add( sound1 );
+        },
+
+        // Fonction appelée lors du chargement
+        function (xhr) {
+            console.log((xhr.loaded / xhr.total * 100) + '% loaded boat');
+        },
+
+        // Fonction appelée lors d'une quelconque erreur
+        function (error) {
+            console.log('Une erreur est survenue');
+            console.log(error)
+        }
+    );
+
+}
+
 function loadLightHouse() {
     var loader = new GLTFLoader();
     loader.load(
@@ -989,32 +1040,6 @@ function onWindowResize() {
     camera.updateProjectionMatrix();
 
     renderer.setSize( window.innerWidth, window.innerHeight );
-
-}
-
-function loadCloud(){
-
-    let loader = new THREE.TextureLoader();
-    loader.load("smoke.png", function(texture){
-        cloudGeo = new THREE.PlaneBufferGeometry(500,500);
-        cloudMaterial = new THREE.MeshLambertMaterial({
-            map: texture,
-            transparent: true
-        });
-        for(let p=0; p<25; p++) {
-            let cloud = new THREE.Mesh(cloudGeo,cloudMaterial);
-            cloud.position.set(
-                Math.random()*800 -400,
-                500,
-                Math.random()*500 - 450
-            );
-            cloud.rotation.x = 1.16;
-            cloud.rotation.y = -0.12;
-            cloud.rotation.z = Math.random()*360;
-            cloud.material.opacity = 0.6;
-            scene.add(cloud);
-        }
-    });
 
 }
 
