@@ -8,6 +8,8 @@ var rainGeo,flash, rain,rainDrop, rainCount = 15000;
 var camera, scene, renderer, controls;
 var stats;
 var container;
+var pzVoile = -400;
+var boat;
 var rainColor, rainMaterial;
 var gun;
 var target;
@@ -323,10 +325,10 @@ function init(){
     render();
     grounds();
     loadIle();
-    // loadHouse();
-    // loadtree();
-    // loadboat();
-    // loadLightHouse();
+    loadHouse();
+    loadtree();
+    loadboat();
+    loadLightHouse();
     // loadChickenCoop(800,-65,1200,3);
     // loadChickenCoop(800,-65,1000,4);
     // loadChickenCoop(600,-65,800,2.3);
@@ -418,8 +420,6 @@ audioLoader.load( './src/sound/seaSound.ogg', function( buffer ) {
     sound1.play();
 });
 
-
-
 // Set volume in function of UI parameters
 var SoundControls = function () {
     this.chicken = sound0.getVolume();
@@ -430,7 +430,6 @@ var SoundControls = function () {
 
 var soundControls = new SoundControls();
 var volumeFolder = gui.addFolder( 'Sounds' );
-
 
 // Set parameters of control UI
 volumeFolder.add( soundControls, 'chicken' ).min( 0.0 ).max( 5.0 ).step( 0.05 ).onChange( function () {
@@ -446,10 +445,6 @@ volumeFolder.add( soundControls, 'rain' ).min( 0.0 ).max( 5.0 ).step( 0.05 ).onC
 } );
 
 volumeFolder.open();
-
-///////////
-
-
 
 ///////////
 
@@ -892,35 +887,33 @@ function loadboat() {
 }
 
 function loadVoile() {
+
     var loader = new GLTFLoader();
     loader.load(
         // Chemin de la ressource
         './src/objects/tartane/scene.gltf',
         // called when the resource is loaded
-        function (gltf) {
-            gltf.scene.traverse( function ( child ) {
+        function (boat) {
+            boat.scene.traverse( function ( child ) {
 
                 if ( child.isMesh ) {
                     child.castShadow = true;
-                    child.receiveShadow = false;
+                    child.receiveShadow = true;
                 }
 
             } );
-            scene.add(gltf.scene);
+            scene.add(boat.scene);
 
-            gltf.animations; // Array<THREE.AnimationClip>
-            gltf.scene.scale.set(15,15,15); // THREE.Scene
-            gltf.scenes; // Array<THREE.Scene>
-            gltf.cameras; // Array<THREE.Camera>
-            gltf.asset; // Object
+            boat.animations; // Array<THREE.AnimationClip>
+            boat.scene.scale.set(60,60,60); // THREE.Scene
+            boat.scenes; // Array<THREE.Scene>
+            boat.cameras; // Array<THREE.Camera>
+            boat.asset; // Object
 
-            gltf.scene.rotation.y = 0;
-            gltf.scene.position.x = 100;
-            gltf.scene.position.z = 100;
-            gltf.scene.position.y = 0;
+            boat.scene.rotation.y = 1.5;
+            boat.scene.position.set(4000,-150,pzVoile);
 
 
-            gltf.scene.add( sound1 );
         },
 
         // Fonction appelée lors du chargement
@@ -936,6 +929,8 @@ function loadVoile() {
     );
 
 }
+
+
 
 function loadLightHouse() {
     var loader = new GLTFLoader();
@@ -1060,6 +1055,7 @@ function shooterAkimbo() {
 
 function animate() {
 
+    
     requestAnimationFrame( animate );
 
     cloudParticles.forEach(p => {
@@ -1133,6 +1129,7 @@ function animate() {
 
     }
 
+    //Target object = rotation phare
     targetObject.position.set(rotationX,100,0);
 
     stats.update();
@@ -1140,10 +1137,3 @@ function animate() {
 
 
 }
-
-
-
-
-
-
-
