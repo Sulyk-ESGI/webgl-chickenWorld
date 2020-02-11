@@ -43,6 +43,7 @@ var direction = new THREE.Vector3();
 /////////////////////////////////////////
 // 		Paramètres des contrôles   	   //
 /////////////////////////////////////////
+
 const gui = new dat.GUI();
 var environnementFolder = gui.addFolder( 'Environnement' );
 var colorFolder = gui.addFolder('Color');
@@ -58,15 +59,18 @@ colorFolder.addColor(params , 'rainColor');
 environnementFolder.open();
 
 
+////////////////////////////////////////
+
 init();
 animate();
 
 function init(){
 
-    // Création d'une div dans le dom, et ajout du container
+    // Creation of the DOM container
     container = document.createElement('div');
     document.body.appendChild(container);
 
+    //Creation en poisitionning of the camera
     camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 1, 30500 );
     camera.position.y = 0;
     camera.position.x= 150;
@@ -86,8 +90,6 @@ function init(){
 
     //Fog
     scene.fog = new THREE.Fog( 0x00001a, 0, 24500 );
-
-    //
 
     //shooter akimbo
     let body = document.getElementsByTagName("body")[0];
@@ -222,10 +224,9 @@ function init(){
 
     //
 
-    //A
-
     controls = new PointerLockControls( camera, document.body );
 
+    //Screen with Keyboard instruction
     var blocker = document.getElementById( 'blocker' );
     var instructions = document.getElementById( 'instructions' );
 
@@ -235,6 +236,7 @@ function init(){
 
     }, false );
 
+    // if control not lock -> instruction and blocker are hide
     controls.addEventListener( 'lock', function () {
 
         instructions.style.display = 'none';
@@ -242,6 +244,7 @@ function init(){
 
     } );
 
+    // if control lock -> instruction and blocker are show
     controls.addEventListener( 'unlock', function () {
 
         blocker.style.display = 'block';
@@ -249,8 +252,10 @@ function init(){
 
     } );
 
+    //For raycaster collision
     scene.add( controls.getObject() );
 
+    // Function when you press your Key on keyboard
     var onKeyDown = function ( event ) {
 
         switch ( event.keyCode ) {
@@ -282,6 +287,7 @@ function init(){
         }
     };
 
+    // Function when you unpress your key on keyboard
     var onKeyUp = function ( event ) {
         switch ( event.keyCode ) {
             case 38: // up
@@ -319,7 +325,7 @@ function init(){
     renderer.shadowMap.type = THREE.PCFSoftShadowMap; // default THREE.PCFShadowMap
     document.body.appendChild( renderer.domElement );
 
-    //
+    // LOADER //
 
     setStatsModule();
     render();
@@ -329,32 +335,27 @@ function init(){
     loadtree();
     loadboat();
     loadLightHouse();
-    // loadChickenCoop(800,-65,1200,3);
-    // loadChickenCoop(800,-65,1000,4);
-    // loadChickenCoop(600,-65,800,2.3);
-    // loadChicken(600,-58,800,0);
-    //
-    //
-    // loadFlower(400,-57,-100,0);
-    // loadFlower(-600,-57,300,0);
-    // loadFlower(1200,-57,450,0);
-    // loadFlower(100,-57,100,0);
-    // loadFlower(100,-57,100,0);
+    loadChickenCoop(800,-65,1200,3);
+    loadChickenCoop(800,-65,1000,4);
+    loadChickenCoop(600,-65,800,2.3);
+    loadChicken(600,-58,800,0);
+
+    // Boucle to load flower on random position
+    for (let i=0; i<40 ; i++){
+        loadFlower(getRandomInt(-400,1000),-57,getRandomInt(-100,800),getRandomInt(0,100),getRandomInt(0.5,2.5));
+    }
 
     rains();
 
-    //loadOldMan();
+    loadOldMan();
 
+    // Gun add to camera
     loadGun(-12, -5, -15, 1.7);
     loadGun(12, -5, -15, 1.4);
 
-    scene.add(camera);
-    var axesHelper = new THREE.AxesHelper( 5000 );
-    scene.add( axesHelper );
 
-
-    poto(350,1,1200);
-    poto(250,1,1000);
+    // poto(350,1,1200);
+    // poto(250,1,1000);
     // poto(-200,1,800);
     // poto(-600,1,300);
     // poto(-400,1,-300);
@@ -364,7 +365,7 @@ function init(){
     // poto(1700,1,-1500);
     // poto(2000,1,-1000);
     // poto(2100,1,-500);
-    // //mid
+    // mid posistion
     // poto(2300,1,0);
     // poto(2000,1,500);
     // poto(1500,1,1000);
@@ -372,14 +373,13 @@ function init(){
     // poto(600,1,2000);
     // poto(300,1,1800);
 
-    loadVoile();
+    //loadVoile();
 
     //
+
     window.addEventListener( 'resize', onWindowResize, false );
 
 }
-
-/////////
 
 /*
  *  LOAD SOUND AND PARAMETERS SOUND CONTROLS
@@ -396,7 +396,6 @@ audioLoader.load( './src/sound/poulSound.ogg', function( buffer ) {
     sound0.setRefDistance( 20 );
     sound0.play();
 });
-
 
 // Global audio RAIN
 var sound3 = new THREE.Audio( listener );
@@ -930,8 +929,6 @@ function loadVoile() {
 
 }
 
-
-
 function loadLightHouse() {
     var loader = new GLTFLoader();
     loader.load(
@@ -977,7 +974,7 @@ function loadLightHouse() {
 
 }
 
-function loadFlower(Px,Py,Pz,Rt) {
+function loadFlower(Px,Py,Pz,Rt,sc) {
     var loader = new GLTFLoader();
     loader.load(
         // Chemin de la ressource
@@ -998,7 +995,7 @@ function loadFlower(Px,Py,Pz,Rt) {
 
             gltf.animations; // Array<THREE.AnimationClip>
             gltf.scene; // THREE.Scene
-            gltf.scene.scale.set(1,1,1); // THREE.Scene
+            gltf.scene.scale.set(sc,sc,sc); // THREE.Scene
             gltf.scenes; // Array<THREE.Scene>
             gltf.cameras; // Array<THREE.Camera>
             gltf.asset; // Object
@@ -1055,7 +1052,7 @@ function shooterAkimbo() {
 
 function animate() {
 
-    
+
     requestAnimationFrame( animate );
 
     cloudParticles.forEach(p => {
